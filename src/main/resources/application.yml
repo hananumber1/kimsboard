@@ -4,8 +4,7 @@ spring:
     active: dev 
   jpa:
     hibernate:
-      ddl-auto: none #데이터 베이스 초기화 전략 사용 안함 
-    generate-ddl: false
+      ddl-auto: none #데이터 베이스 초기화 전략 사용 안함
     show-sql: true 
     database: oracle
 #Log    
