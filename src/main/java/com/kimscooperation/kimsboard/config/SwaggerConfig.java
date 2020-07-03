@@ -24,12 +24,12 @@ public class SwaggerConfig {
 		title = "kimsboard API Document " + version; 
 		
 		return new Docket(DocumentationType.SWAGGER_2)
-				.useDefaultResponseMessages(false)
 				.groupName(version)
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.kimscooperation.kimsboard.controller.v1"))
 				.paths(PathSelectors.any())
 				.build()
+				.useDefaultResponseMessages(false)
 				.apiInfo(apiInfo(title, version));
 	}
 	

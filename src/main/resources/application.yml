@@ -4,9 +4,13 @@ spring:
     active: dev 
   jpa:
     hibernate:
-      ddl-auto: none #데이터 베이스 초기화 전략 사용 안함
+      ddl-auto: update #데이터 베이스 초기화 전략 사용 안함
     show-sql: true 
     database: oracle
+  messages:
+    basename: classpath:/messages/exception
+    encoding: UTF-8
+   
 #Log    
 logging:
   level:
