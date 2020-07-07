@@ -1,9 +1,15 @@
 package com.kimscooperation.kimsboard.domain;
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -11,6 +17,11 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,7 +37,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name = "users")
 @ApiModel(value = "사용자", description = "사용자 엔티티")
-public class Users {
+public class Users implements UserDetails {
 
 	@ApiModelProperty(value = "사용자 번호")
 	@Id
@@ -39,6 +50,7 @@ public class Users {
 	private String userId;
 
 	@ApiModelProperty(value = "사용자 비밀번호")
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Column(name = "password", nullable = false)
 	private String password;
 
@@ -50,5 +62,44 @@ public class Users {
 	@CreationTimestamp
 	@Column(name = "regdate")
 	private Date regdate;
+
+	@ElementCollection(fetch = FetchType.EAGER)
+	@Builder.Default
+	private List<String> roles = new ArrayList<>();
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+	}
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Override
+	public String getUsername() {
+		return this.userId;
+	}
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@Override
+	public boolean isEnabled() {
+		return true;
+	}
 
 }
