@@ -51,7 +51,7 @@ public class Users implements UserDetails {
 
 	@ApiModelProperty(value = "사용자 비밀번호")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-	@Column(name = "password", nullable = false)
+	@Column(name = "password")
 	private String password;
 
 	@ApiModelProperty(value = "사용자 이름")
@@ -62,6 +62,9 @@ public class Users implements UserDetails {
 	@CreationTimestamp
 	@Column(name = "regdate")
 	private Date regdate;
+
+	@Column(length = 100)
+	private String provider;
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
