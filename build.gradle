@@ -23,6 +23,12 @@ repositories {
 }
 
 dependencies {
+	//social 로그인 토큰을 받아오기 위해 임시사용 
+	implementation 'org.springframework.boot:spring-boot-starter-freemarker'
+
+	// JSON 형식으로 객체를 매핑하기 위한 Google 라이브러리 GSON
+	implementation 'com.google.code.gson:gson'
+
 	// 회원 비밀번호를 암호화 하기위한 JWT 라이브러리 
 	implementation 'io.jsonwebtoken:jjwt:0.9.1'
 	

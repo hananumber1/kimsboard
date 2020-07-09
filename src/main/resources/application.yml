@@ -10,7 +10,20 @@ spring:
   messages:
     basename: classpath:/messages/exception
     encoding: UTF-8
-   
+  social:
+    kakao:
+      client_id: e1a42c36f99cb8171837a0b93eff564d
+      redirect: /social/login/kakao
+      url:
+        login: https://kauth.kakao.com/oauth/authorize
+        token: https://kauth.kakao.com/oauth/token
+        profile: https://kapi.kakao.com/v2/user/me
+  url:
+    base: http://localhost:8080
+  freemarker:
+    template-loader-path: classpath:/templates
+    suffix: .ftl
+    
 #Log    
 logging:
   level:
