@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kimscooperation.kimsboard.advice.exception.CUserNotFoundException;
-import com.kimscooperation.kimsboard.domain.Users;
+import com.kimscooperation.kimsboard.domain.user.Users;
 import com.kimscooperation.kimsboard.model.CommonResult;
 import com.kimscooperation.kimsboard.model.ListResult;
 import com.kimscooperation.kimsboard.model.SingleResult;
