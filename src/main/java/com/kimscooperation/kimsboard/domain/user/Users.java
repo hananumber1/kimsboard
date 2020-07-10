@@ -1,34 +1,22 @@
-package com.kimscooperation.kimsboard.domain;
+package com.kimscooperation.kimsboard.domain.user;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
-
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Builder
 @Entity
@@ -36,38 +24,30 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "users")
-@ApiModel(value = "사용자", description = "사용자 엔티티")
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Users implements UserDetails {
 
-	@ApiModelProperty(value = "사용자 번호")
 	@Id
 	@SequenceGenerator(name = "user_seq_generator", sequenceName = "user_seq", initialValue = 1, allocationSize = 1)
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seq_generator")
+	@Column(name = "user_num")
 	private long userNum;
 
-	@ApiModelProperty(value = "사용자 아이디")
 	@Column(name = "user_id", nullable = false)
 	private String userId;
 
-	@ApiModelProperty(value = "사용자 비밀번호")
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	@Column(name = "password")
 	private String password;
 
-	@ApiModelProperty(value = "사용자 이름")
 	@Column(name = "name")
 	private String name;
-
-	@ApiModelProperty(value = "사용자 가입일")
-	@CreationTimestamp
-	@Column(name = "regdate")
-	private Date regdate;
 
 	@Column(length = 100)
 	private String provider;
 
-	@ElementCollection(fetch = FetchType.EAGER)
 	@Builder.Default
+	@ElementCollection(fetch = FetchType.EAGER)
 	private List<String> roles = new ArrayList<>();
 
 	@Override

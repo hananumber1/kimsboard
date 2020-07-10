@@ -14,7 +14,7 @@ import com.kimscooperation.kimsboard.advice.exception.CIdSigninFailedException;
 import com.kimscooperation.kimsboard.advice.exception.CUserExistException;
 import com.kimscooperation.kimsboard.advice.exception.CUserNotFoundException;
 import com.kimscooperation.kimsboard.config.security.JwtTokenProvider;
-import com.kimscooperation.kimsboard.domain.Users;
+import com.kimscooperation.kimsboard.domain.user.Users;
 import com.kimscooperation.kimsboard.model.CommonResult;
 import com.kimscooperation.kimsboard.model.KakaoProfile;
 import com.kimscooperation.kimsboard.model.SingleResult;

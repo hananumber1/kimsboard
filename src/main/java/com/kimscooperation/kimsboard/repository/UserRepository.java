@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.kimscooperation.kimsboard.domain.Users;
+import com.kimscooperation.kimsboard.domain.user.Users;
 
 public interface UserRepository extends JpaRepository<Users, Long> {
 	

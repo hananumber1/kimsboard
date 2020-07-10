@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.kimscooperation.kimsboard.advice.exception.CAuthenticationEntryPointException;
 import com.kimscooperation.kimsboard.advice.exception.CCommunicationException;
 import com.kimscooperation.kimsboard.advice.exception.CIdSigninFailedException;
+import com.kimscooperation.kimsboard.advice.exception.CNotOwnerException;
+import com.kimscooperation.kimsboard.advice.exception.CResourceNotExistException;
 import com.kimscooperation.kimsboard.advice.exception.CUserExistException;
 import com.kimscooperation.kimsboard.advice.exception.CUserNotFoundException;
 import com.kimscooperation.kimsboard.model.CommonResult;
@@ -41,7 +43,8 @@ public class ExceptionAdvice {
 	private final MessageSource messageSource;
 
 	/**
-	 * 아래에 정의된 에러 중 해당하는 에러가 없을때 최상위 예외처리 클래스인 Exception 클래스로 잡습니다.  
+	 * 아래에 정의된 에러 중 해당하는 에러가 없을때 최상위 예외처리 클래스인 Exception 클래스로 잡습니다.
+	 * 
 	 * @param request
 	 * @param exception
 	 * @return response.getFailResult(오류 코드, 오류메시지)를 표준화 하여 전달
@@ -84,6 +87,18 @@ public class ExceptionAdvice {
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
 	public CommonResult communicationException(HttpServletRequest request, CUserExistException e) {
 		return responseService.getFailResult(Integer.valueOf(getMessage("existingUser.code")), getMessage("existingUser.msg"));
+	}
+
+	@ExceptionHandler(CNotOwnerException.class)
+	@ResponseStatus(HttpStatus.NON_AUTHORITATIVE_INFORMATION)
+	public CommonResult notOwnerException(HttpServletRequest request, CNotOwnerException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("notOwner.code")), getMessage("notOwner.msg"));
+	}
+
+	@ExceptionHandler(CResourceNotExistException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public CommonResult resourceNotExistException(HttpServletRequest request, CResourceNotExistException e) {
+		return responseService.getFailResult(Integer.valueOf(getMessage("resourceNotExist.code")), getMessage("resourceNotExist.msg"));
 	}
 
 	// code정보에 해당하는 메시지를 조회합니다.
