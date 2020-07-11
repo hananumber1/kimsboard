@@ -3,6 +3,11 @@ os: linux
 files:
   - source:  /
     destination: /home/ubuntu/applications/build
+permissions:
+  - object: /home/ubuntu/applications/
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
 hooks:
   AfterInstall:
     - location: excute_deploy.sh
