@@ -5,6 +5,6 @@ files:
     destination: /home/ubuntu/applications/build
 hooks:
   AfterInstall:
-    - location: /home/ubuntu/applications/sh/kimsboard_deploy.sh
+    - location: excute_deploy.sh
       timeout: 60
       runas : root
