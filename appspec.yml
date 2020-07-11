@@ -5,8 +5,8 @@ files:
     destination: /home/ubuntu/applications/build
 permissions:
   - object: /home/ubuntu/applications/
-    owner: ubuntu
-    group: ubuntu
+    owner: root
+    group: root
     mode: 755
 hooks:
   AfterInstall:
