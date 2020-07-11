@@ -1,0 +1,10 @@
+version: 0.0
+os: linux
+files:
+  - source:  /
+    destination: /home/ubuntu/applications/build
+hooks:
+  AfterInstall:
+    - location: /home/ubuntu/applications/sh/kimsboard_deploy.sh
+      timeout: 60
+      runas : root
