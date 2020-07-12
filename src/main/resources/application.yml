@@ -50,6 +50,6 @@ spring:
   profiles: env
   datasource:
     driver-class-name: oracle.jdbc.OracleDriver
-    url: ENC(0tacGmbv1kcjrIOJOOCcD0Whmk3dWb+O7+JehQFyJ7tJfZUpPGYmkBqrBzHvEcvYO6w6fIkqDNoqOCO9EbvZEp3ln9yB/LzX)
+    url: ENC(1+z3wlm0lf7bKgKKzvSbXRqjtDI7/b+wXBV4LVxQNaEQa+41M+kgCK0RpiajJlawf42kfXS24Ee38iHuV96UtlDIPDMBWd2XQVQwLrMqGTOUMjSna2noITLSWQiL6yBJwAQldWbsMac=)
     username: ENC(YeiNNcnAmSW7bZ0rhIpyp9pt01pn3dlK)
     password: ENC(sZTsM2RYrt6SQz14lYJTDA+TeoJLbeN5c5SEGDxtveU=)
