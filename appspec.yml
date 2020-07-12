@@ -2,9 +2,8 @@ version: 0.0
 os: linux
 files:
   - source:  /
-    destination: /home/ubuntu/applications/build
+    destination: /home/ubuntu/applications/kimsboard/build
 hooks:
   AfterInstall:
-    - location: execute_deploy.sh
-      timeout: 60
-      runas : root
+    - location: execute-deploy.sh
+      timeout: 180
