@@ -3,13 +3,8 @@ os: linux
 files:
   - source:  /
     destination: /home/ubuntu/applications/build
-permissions:
-  - object: /home/ubuntu/applications/
-    owner: root
-    group: root
-    mode: 755
 hooks:
   AfterInstall:
-    - location: excute_deploy.sh
+    - location: execute_deploy.sh
       timeout: 60
       runas : root
