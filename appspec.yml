@@ -3,7 +3,13 @@ os: linux
 files:
   - source:  /
     destination: /home/ubuntu/applications/kimsboard/build
+permissions:
+  - object: /home/ubuntu/applications/kimsboard/
+    owner: ubuntu
+    group: ubuntu
+    mode: 755    
 hooks:
   AfterInstall:
     - location: execute-deploy.sh
       timeout: 180
+      runas: root
