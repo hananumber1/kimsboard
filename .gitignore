@@ -1,3 +1,7 @@
+### properties ###
+src/main/resources/application-local.yml
+src/main/resources/application-production.yml
+
 HELP.md
 .gradle
 build/
@@ -130,3 +134,4 @@ gradle-app.setting
 **/build/
 
 # End of https://www.toptal.com/developers/gitignore/api/eclipse,gradle,react
+src/main/resources/application-local.yml
