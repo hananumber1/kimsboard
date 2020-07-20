@@ -15,7 +15,7 @@ public class KimsboardApplication {
 	public static final String APPLICATION_LOCATIONS = "spring.config.location=" 
 		+ "classpath:application.yml,"
 		+ "classpath:application-local.yml,"
-		+ "/home/ubuntu/applications/kimsboard/config/production-application.yml";
+		+ "/home/ubuntu/applications/kimsboard/config/application-production.yml";
 			
 	public static void main(String[] args) {
 		// SpringApplication.run(KimsboardApplication.class, args);
