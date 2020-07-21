@@ -1,7 +1,9 @@
 #통합 yml 파일
 spring:
   profiles:
-    active: dev 
+    active: local
+    include:
+    - key-profile
   jpa:
     hibernate:
       ddl-auto: update #데이터 베이스 초기화 전략 사용 안함
@@ -33,23 +35,3 @@ logging:
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
-   
----
-#개발용 설정
-spring:
-  profiles: dev
-  datasource: 
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: ENC(gwaxu2RhZw2ewtDV1m9fkbij1ScFK+dyAq+5eCkTEO5EBvXBaOGNDMn7QvKwRKpp)
-    username: ENC(3sZQfEjo8VlXTEZNkLYfI2t4LLG5y++l)
-    password: ENC(/2qXEhOsc0gbx+rFi9Q5bc2YHFaSYWBZ)
-
----
-#운영용 설정
-spring:
-  profiles: env
-  datasource:
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: ENC(1+z3wlm0lf7bKgKKzvSbXRqjtDI7/b+wXBV4LVxQNaEQa+41M+kgCK0RpiajJlawf42kfXS24Ee38iHuV96UtlDIPDMBWd2XQVQwLrMqGTOUMjSna2noITLSWQiL6yBJwAQldWbsMac=)
-    username: ENC(YeiNNcnAmSW7bZ0rhIpyp9pt01pn3dlK)
-    password: ENC(sZTsM2RYrt6SQz14lYJTDA+TeoJLbeN5c5SEGDxtveU=)
