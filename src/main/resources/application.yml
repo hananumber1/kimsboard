@@ -1,7 +1,9 @@
 #통합 yml 파일
 spring:
   profiles:
-    active: local 
+    active: local
+    include:
+    - key-profile
   jpa:
     hibernate:
       ddl-auto: update #데이터 베이스 초기화 전략 사용 안함
@@ -33,15 +35,3 @@ logging:
 jasypt:
   encryptor:
     bean: jasyptStringEncryptor
-   
----
-#개발용 설정
-spring:
-  profiles: local
-  profiles.include: local-db
-
----
-#운영용 설정
-spring:
-  profiles: production
-  profiles.include: prod-db
