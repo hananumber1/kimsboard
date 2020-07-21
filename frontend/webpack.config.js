@@ -1,5 +1,5 @@
 const path = require('path'); //node에서 경로를 쉽게 조작하도록 설정
-const HtmlWebpackPlugin = require('html-webpack-plugin'); // oupt을 prject
+const HtmlWebpackPlugin=require('html-webpack-plugin'); // oupt을 prject
 
 module.exports = {
     name: 'webpackConfiguration', //웹팩 설정 이름
@@ -10,21 +10,41 @@ module.exports = {
         extensions: ['.js', '.jsx'] //모듈중 loader가 파일을 불러올 때 확장자를 나열된 확장자 옵션으로 가져온다.
     },
     module: { //모듈들을 처리하는 방법을 결정
-        rules: [{  // .js나  .jsx라는 파일을 babel-loader를 가지고 options을 적용 한다라는 규칙.
-            test: /\.jsx?/, //.js나 .jsx라는 파일에 적용
-            loader: 'babel-loader', // babel을 webpack에서 사용할 수 있게
-            options: {
-                presets: ['@babel/preset-env', '@babel/preset-react'],  //preset-env 최신문법(es6) -> 옛날 문법(es5 이하)으로 변환, preset-react jsx를 js로 바꿔주는 용도 
-                plugins: ['@babel/plugin-proposal-class-properties', 'react-hot-loader/babel']
+        rules: [
+            {  // .js나  .jsx라는 파일을 babel-loader를 가지고 options을 적용 한다라는 규칙.
+                test: /\.jsx?/, //.js나 .jsx라는 파일에 적용
+                loader: 'babel-loader', // babel을 webpack에서 사용할 수 있게
+                options: {
+                    presets: ['@babel/preset-env', '@babel/preset-react'],  //preset-env 최신문법(es6) -> 옛날 문법(es5 이하)으로 변환, preset-react jsx를 js로 바꿔주는 용도 
+                    plugins: ['@babel/plugin-proposal-class-properties', 'react-hot-loader/babel']
+                }
+            },
+            {
+                test: /\.html$/,
+                use: [
+                  {
+                    loader: "html-loader",
+                    options: { minimize: true }
+                  }
+                ]
+            },
+            {
+                test: /\.css$/,
+                use: ['css-loader']
             }
-        }]
+        ]
     },
     entry: { //app.js
         app: path.join(__dirname, 'src/index')
     },
     output: { //path라는 경로에  filename으로 build 파일을 출력
-        path: path.join(__dirname, '..', 'src/main/resources/static/built'),
+        path: path.join(__dirname, '/build'),
         filename: 'bundle.js'
     },
-    plugins:[new htmlWebpackPlugin()]
+    plugins:[
+        new HtmlWebpackPlugin({
+            template: './public/index.html', // public/index.html 파일을 읽는다.
+            filename: 'index.html' // output으로 출력할 파일은 index.html 이다.
+        })
+    ]
 };
