@@ -1,36 +1,6 @@
-### properties ###
-src/main/resources/application-local.yml
-src/main/resources/application-production.yml
 
-HELP.md
-.gradle
-build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**
-!**/src/test/**
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### VisualStudioCode ###
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/extensions.json
-*.code-workspace
-
-### VisualStudioCode Patch ###
-# Ignore all local history of files
-.history
-
-# Created by https://www.toptal.com/developers/gitignore/api/eclipse,gradle,react
-# Edit at https://www.toptal.com/developers/gitignore?templates=eclipse,gradle,react
+# Created by https://www.toptal.com/developers/gitignore/api/visualstudiocode,eclipse,gradle,react
+# Edit at https://www.toptal.com/developers/gitignore?templates=visualstudiocode,eclipse,gradle,react
 
 ### Eclipse ###
 .metadata
@@ -77,6 +47,8 @@ local.properties
 
 # STS (Spring Tool Suite)
 .springBeans
+.classpath
+.project
 
 # Code Recommenders
 .recommenders/
@@ -114,6 +86,18 @@ psd
 thumb
 sketch
 
+### VisualStudioCode ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+#!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+### VisualStudioCode Patch ###
+# Ignore all local history of files
+.history
+
 ### Gradle ###
 .gradle
 build/
@@ -133,5 +117,11 @@ gradle-app.setting
 ### Gradle Patch ###
 **/build/
 
-# End of https://www.toptal.com/developers/gitignore/api/eclipse,gradle,react
-src/main/resources/application-local.yml
+# End of https://www.toptal.com/developers/gitignore/api/visualstudiocode,eclipse,gradle,react
+
+# --------------------------------------------------------------------------------------------------
+#                                  추가가 필요한 gitignore를 아래에 작성
+# --------------------------------------------------------------------------------------------------
+
+# 개인 설정파일
+src/main/resources/application-*.yml
