@@ -5,7 +5,7 @@ PROJECT_NAME=kimsboard
 
 echo "> Build 파일 복사"
 # 재배포를 할 경우 많은 시간이 필요해서 긴급하게 배포를 하기위해서 jar를 따로 보관
-cp $REPOSITORY/build/build/libs/*.jar $REPOSITORY/jar/
+cp -f $REPOSITORY/build/build/libs/*.jar $REPOSITORY/jar/
 
 echo "> 현재 구동 중인 애플리케이션 pid 확인"
 
