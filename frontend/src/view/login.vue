@@ -26,7 +26,7 @@ export default {
     
     setLogin(){
       console.log(this.id, this.password)
-      axios.post('/v1/signin', {
+      axios.post('http://localhost:8080/v1/signin', {
       userId: this.id,
       password: this.password
   })
