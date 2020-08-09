@@ -20,12 +20,13 @@
     "symbol-observable": "^1.2.0",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
-    "value-equal": "^1.0.1",
-    "vue": "^2.6.11",
-    "vue-loader": "^15.9.3",
-    "vue-template-compiler": "^2.6.11"
+    "value-equal": "^1.0.1"
   },
   "devDependencies": {
+    "html-webpack-plugin": "^4.3.0",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.11",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
