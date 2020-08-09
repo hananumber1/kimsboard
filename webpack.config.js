@@ -11,11 +11,17 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve('./frontend/dist'),
   },
+  resolve: {
+    extensions: ['.js', '.vue', '.json'],
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js',
+    }
+  },  
   module: {
     rules: [{
         test: /\.vue$/,
         use: 'vue-loader'
-    }]
+    }],
 },
 plugins: [
   
