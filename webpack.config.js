@@ -1,4 +1,5 @@
 const path = require('path');
+const { VueLoaderPlugin } = require('vue-loader')
 
 module.exports = {
   mode: 'development',
@@ -9,4 +10,14 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve('./frontend/dist'),
   },
+  module: {
+    rules: [{
+        test: /\.vue$/,
+        use: 'vue-loader'
+    }]
+},
+plugins: [
+  
+  new VueLoaderPlugin()
+]
 }
