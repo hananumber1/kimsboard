@@ -27,6 +27,11 @@ public class BoardService {
 	private final PostRepository postRepository;
 	private final UserRepository userRepository;
 
+	//신규게시판을 추가한다.
+	public Board insertBoard(String boardName) {
+        return boardRepository.save(Board.builder().name(boardName).build());
+    }
+
 	// 게시판 이름으로 게시판을 조회. 없을경우 CResourceNotExistException 처리
 	public Board findBoard(String boardName) {
 		return Optional.ofNullable(boardRepository.findByName(boardName)).orElseThrow(CResourceNotExistException::new);

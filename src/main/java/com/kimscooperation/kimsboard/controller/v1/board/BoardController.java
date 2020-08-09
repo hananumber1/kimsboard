@@ -33,8 +33,16 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping(value = "/v1/board")
 public class BoardController {
+
 	private final BoardService boardService;
 	private final ResponseService responseService;
+
+	@ApiImplicitParams({@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header")})
+	@ApiOperation(value = "게시판 생성", notes = "신규 게시판을 생성한다.")
+	@PostMapping(value = "/{boardName}")
+	public SingleResult<Board> createBoard(@PathVariable String boardName) {
+		return responseService.getSingleResult(boardService.insertBoard(boardName));
+	}
 
 	@ApiOperation(value = "게시판 정보 조회", notes = "게시판 정보를 조회한다.")
 	@GetMapping(value = "/{boardName}")
@@ -50,7 +58,7 @@ public class BoardController {
 
 	@ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "게시판 글 작성", notes = "게시판에 글을 작성한다.")
-	@PostMapping(value = "/{boardName}")
+	@PostMapping(value = "/{boardName}/post")
 	public SingleResult<Post> post(@PathVariable String boardName, @Valid @ModelAttribute ParamsPost post) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String uid = authentication.getName();

@@ -30,7 +30,11 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
 			throws IOException, ServletException {
+		
+		//Header에서 사용자를 꺼냄
 		String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
+
+		//token의 유효성 검사 ex) 유효기간인지, 올바른 사용자인지
 		if (token != null && jwtTokenProvider.validateToken(token)) {
 			Authentication auth = jwtTokenProvider.getAuthentication(token);
 			SecurityContextHolder.getContext().setAuthentication(auth);

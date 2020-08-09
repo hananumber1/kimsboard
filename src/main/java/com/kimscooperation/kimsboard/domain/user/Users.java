@@ -36,7 +36,7 @@ public class Users implements UserDetails {
 	@Column(name = "user_id", nullable = false)
 	private String userId;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //JSON 결과로 출력하지 않을 경우 사용
 	@Column(name = "password")
 	private String password;
 
@@ -46,8 +46,8 @@ public class Users implements UserDetails {
 	@Column(length = 100)
 	private String provider;
 
-	@Builder.Default
-	@ElementCollection(fetch = FetchType.EAGER)
+	@Builder.Default // roles가 null인 경우에 ArrayList로 초기화
+	@ElementCollection(fetch = FetchType.EAGER) //값 타입을 하나이상 보관하기 위해서 씀 
 	private List<String> roles = new ArrayList<>();
 
 	@Override
