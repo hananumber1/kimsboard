@@ -1,0 +1,57 @@
+{
+  "name": "kimsboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "history": "^4.10.1",
+    "flux-standard-action": "^2.1.1",
+    "isarray": "^0.0.1",
+    "js-tokens": "^4.0.0",
+    "is-promise": "^2.2.2",
+    "axios": "^0.19.2",
+    "hoist-non-react-statics": "^3.3.2",
+    "follow-redirects": "^1.5.10",
+    "debug": "^3.1.0",
+    "ms": "^2.0.0",
+    "mini-create-react-context": "^0.4.0",
+    "loose-envify": "^1.4.0",
+    "lodash": "^4.17.19",
+    "object-assign": "^4.1.1",
+    "react-redux": "^7.2.0",
+    "path-to-regexp": "^1.8.0",
+    "react-router": "^5.2.0",
+    "react-is": "^16.13.1",
+    "redux": "^4.0.5",
+    "prop-types": "^15.7.2",
+    "resolve-pathname": "^3.0.0",
+    "redux-promise": "^0.6.0",
+    "regenerator-runtime": "^0.13.7",
+    "redux-thunk": "^2.3.0",
+    "tiny-invariant": "^1.1.0",
+    "symbol-observable": "^1.2.0",
+    "tiny-warning": "^1.0.3",
+    "value-equal": "^1.0.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack",
+    "start": "webpack-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zxc7023/kimsboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zxc7023/kimsboard/issues"
+  },
+  "homepage": "https://github.com/zxc7023/kimsboard#readme"
+}
