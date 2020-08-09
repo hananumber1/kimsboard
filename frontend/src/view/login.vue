@@ -23,7 +23,9 @@ export default {
          }
   },
   methods:{
+    
     setLogin(){
+      console.log(this.id, this.password)
       axios.post('/v1/signin', {
       userId: this.id,
       password: this.password
@@ -36,7 +38,9 @@ export default {
   })
   .catch(function (error) {
     console.log(error);
+    
   });
+  
 }
   }
 }
