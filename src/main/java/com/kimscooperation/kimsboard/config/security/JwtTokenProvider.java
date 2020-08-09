@@ -2,16 +2,18 @@ package com.kimscooperation.kimsboard.config.security;
 
 import java.util.Base64;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import com.kimscooperation.kimsboard.domain.user.Users;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import io.jsonwebtoken.Claims;
@@ -34,50 +36,78 @@ public class JwtTokenProvider {
 	private String secretKey;
 
 	// 토큰의 유효 시간을 1시간으로 설정. 1시간이후는 새롭게 refresh 해야함.
-	private long tokenValidMilisecond = 1000L * 60 * 60;
+	//private final long tokenValidMilisecond = 1000L * 60 * 60;
+	private final long tokenValidMilisecond = 1000L * 60;
 
-	private final UserDetailsService userDetailsService;
 
-	// was가 띄어질 때 실행
+	/**
+	 * was가 실행될 때 init()메소드를 실행하고 secretKey를 암호화
+	 */
 	@PostConstruct
 	protected void init() {
 		secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
 	}
 
-	// Jwt 토큰 생성
-	public String createToken(String userPk, List<String> roles) {
-		Claims claims = Jwts.claims().setSubject(userPk);
+	/**
+	 * JWT 토큰을 생성하는 메소드입니다.
+	 * @param userNum {@link Users} 사용자의 번호 
+	 * @param roles User {@link Users} 사용자의 권한
+	 * @return jwt String
+	 */
+	public String createToken(final String userNum, final List<String> roles) {
+		final Claims claims = Jwts.claims().setSubject(userNum);
 		claims.put("roles", roles);
-		Date now = new Date();
-		return Jwts.builder().setClaims(claims) // 데이터
-				.setIssuedAt(now) // 토큰 발행일자
-				.setExpiration(new Date(now.getTime() + tokenValidMilisecond)) // set Expire Time
-				.signWith(SignatureAlgorithm.HS256, secretKey) // 암호화 알고리즘, secret값 세팅
+		final Date now = new Date();
+		
+		//Jwt payload 담을 내용을 builder를 통해 만들고 반환
+		return Jwts.builder()
+				.setClaims(claims) // userNum과 role을 이름:값으로 저장
+				.setIssuedAt(now) // 토큰의 발금된 시간
+				.setExpiration(new Date(now.getTime() + tokenValidMilisecond)) // 토큰의 만료 기간
+				.signWith(SignatureAlgorithm.HS256, secretKey) // 토큰의 암호화 알고리즘과 비밀키
 				.compact();
 	}
-
-	// Jwt 토큰으로 인증 정보를 조회
-	public Authentication getAuthentication(String token) {
-		UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
-		return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+	
+	public Authentication getAuthentication(final String token) {
+		//토큰으로부터 정보를 가져옴.
+		final Map<String, Object> parseMap = getUserInfo(token);
+		final Users user = Users.builder().userId(String.valueOf(parseMap.get("userNum"))).roles((List<String>)parseMap.get("authorities")).build();
+		return new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
 	}
 
-	// Jwt 토큰에서 회원 구별 정보 추출
-	public String getUserPk(String token) {
-		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
-	}
+	/**
+	 * jwt token의 body에서 claims로 부터 user정보를 가져옵니다.
+	 * @param token Jwt token
+	 * @return
+	 */
+    public Map<String, Object> getUserInfo(final String token) {
+        final Jws<Claims> userInfo = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+        final Map<String, Object> result = new HashMap<String, Object>();
+        result.put("userNum", userInfo.getBody().getSubject());
+        result.put("authorities", userInfo.getBody().get("roles", List.class));
+        return result;
+    }
 
-	// Request의 Header에서 token 파싱 : "X-AUTH-TOKEN: jwt토큰"
-	public String resolveToken(HttpServletRequest req) {
+	/**
+	 * Http Request의 Authorization header에 담긴 토큰(암호화된 사용자의 토큰)을 가져오는 메소드입니다. 
+	 * X-AUTH-TOKEN라는 이름으로 파싱합니다.
+	 * @param req {@link HttpServletRequest}
+	 * @return 암호화된 사용자의 문자열
+	 */
+	public String resolveToken(final HttpServletRequest req) {
 		return req.getHeader("X-AUTH-TOKEN");
 	}
 
-	// Jwt 토큰의 유효성 + 만료일자 확인
-	public boolean validateToken(String jwtToken) {
+	/**
+	 * 토큰의 유효성을 검사하는 메소드 입니다.
+	 * @param jwtToken
+	 * @return
+	 */
+	public boolean validateToken(final String jwtToken) {
 		try {
-			Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+			final Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
 			return !claims.getBody().getExpiration().before(new Date());
-		} catch (Exception e) {
+		} catch (final Exception e) {
 			return false;
 		}
 	}

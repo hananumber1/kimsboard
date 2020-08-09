@@ -4,8 +4,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.client.RestTemplate;
 
 @SpringBootApplication
@@ -20,11 +18,6 @@ public class KimsboardApplication {
 	public static void main(String[] args) {
 		// SpringApplication.run(KimsboardApplication.class, args);
 		new SpringApplicationBuilder(KimsboardApplication.class).properties(APPLICATION_LOCATIONS).run(args);
-	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return PasswordEncoderFactories.createDelegatingPasswordEncoder();
 	}
 
 	@Bean
