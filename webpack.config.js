@@ -11,6 +11,16 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve('./frontend/dist'),
   },
+  devServer: {
+    proxy: {
+        '/': {
+            "target": 'http://localhost:8080/',
+            "pathRewrite": { '^/': '' },
+            "changeOrigin": true,
+            "secure": false
+        }
+    }
+  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

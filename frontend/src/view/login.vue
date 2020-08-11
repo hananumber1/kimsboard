@@ -23,25 +23,24 @@ export default {
          }
   },
   methods:{
-    
     setLogin(){
       console.log(this.id, this.password)
-      axios.post('/v1/signin', {
-      userId: this.id,
-      password: this.password
-  })
-  .then(function (response) {
-    // document.cookie = `accessToken=${data.token}`
-    // axios.defaults.headers.common.Authorization = `jwt ${response.data.token}`
-    // localStorage.setItem('userInfo', JSON.stringify(data))
-    console.log(response);
-  })
-  .catch(function (error) {
-    console.log(error);
-    
-  });
-  
-}
+      axios.post('/v1/signin',{
+          userId: this.id,
+          password: this.password
+      })
+      .then(function (response) {
+      // document.cookie = `accessToken=${data.token}`
+      // axios.defaults.headers.common.Authorization = `jwt ${response.data.token}`
+      // localStorage.setItem('userInfo', JSON.stringify(data))
+        console.log("성공");
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log("data에 나와있는 msg를 가지고 잘 활용해주세요 ex) 알람이 뜨거나 hover가 된다거나");
+         console.log(error.response.data);
+      });
+    }
   }
 }
 </script>

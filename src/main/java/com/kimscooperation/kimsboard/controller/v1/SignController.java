@@ -1,10 +1,16 @@
 package com.kimscooperation.kimsboard.controller.v1;
 
 import java.util.Collections;
+import java.util.Map;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +24,7 @@ import com.kimscooperation.kimsboard.domain.user.Users;
 import com.kimscooperation.kimsboard.model.CommonResult;
 import com.kimscooperation.kimsboard.model.KakaoProfile;
 import com.kimscooperation.kimsboard.model.SingleResult;
+import com.kimscooperation.kimsboard.model.user.ParamsUser;
 import com.kimscooperation.kimsboard.repository.UserRepository;
 import com.kimscooperation.kimsboard.service.ResponseService;
 import com.kimscooperation.kimsboard.service.social.KakaoService;
@@ -41,7 +48,9 @@ public class SignController {
 
 	@ApiOperation(value = "로그인", notes = "회원 로그인을 한다.")
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-	public SingleResult<String> signin(@ApiParam(value = "회원ID ", required = true) @RequestParam String userId, @ApiParam(value = "비밀번호", required = true) @RequestParam String password) {
+		public SingleResult<String> signin(@Valid @RequestBody ParamsUser paramsUser) {
+		String userId = paramsUser.getUserId();
+		String password = paramsUser.getPassword();
 		Users user = userRepository.findByUserId(userId).orElseThrow(CIdSigninFailedException::new);
 		if (!passwordEncoder.matches(password, user.getPassword()))
 			throw new CIdSigninFailedException();
@@ -50,7 +59,7 @@ public class SignController {
 
 	@ApiOperation(value = "가입", notes = "회원가입을 한다.")
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public CommonResult signin(@ApiParam(value = "회원ID", required = true) @RequestParam String userId, @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
+	public CommonResult signup(@ApiParam(value = "회원ID", required = true) @RequestParam String userId, @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
 			@ApiParam(value = "이름", required = true) @RequestParam String name) {
 		userRepository.save(Users.builder().userId(userId).password(passwordEncoder.encode(password)).name(name).roles(Collections.singletonList("ROLE_USER")).build());
 		return responseService.getSuccessResult();
