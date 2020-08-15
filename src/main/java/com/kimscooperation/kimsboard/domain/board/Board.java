@@ -29,4 +29,6 @@ public class Board {
 	
 	@Column(nullable = false, length = 100)
 	private String name;
+
+	//고집좀 부리지마
 }
