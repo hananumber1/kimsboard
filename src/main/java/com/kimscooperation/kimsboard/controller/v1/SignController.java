@@ -72,7 +72,7 @@ public class SignController {
 		userRepository.save(Users.builder().userId(paramsJoin.getUserId())
 				.password(passwordEncoder.encode(paramsJoin.getPassword())).name(paramsJoin.getName())
 				.phone(paramsJoin.getPhone()).address(paramsJoin.getAddress())
-				.roles(Collections.singletonList("ROLE_USER")).build());
+				.roles(Collections.singletonList("ROLE_USER")).build()); //한개의 요소를 가지고 List를 사용한다면 왼쪽 처럼 사용. 원래코드는 Arrays.asList("ROLE_USER); 
 		return responseService.getSuccessResult();
 	}
 
