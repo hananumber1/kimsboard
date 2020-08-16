@@ -7,6 +7,9 @@ import App from "./App.vue";
 import router from "./router"
 import store from "./store"
 
+// require('./utils/index');
+import './utils/index'
+
 // component 등록
 Vue.component('Header', require('./component/layout/Header').default);
 Vue.component('Body', require('./component/layout/Body').default);
