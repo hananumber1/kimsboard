@@ -1,15 +1,12 @@
 package com.kimscooperation.kimsboard.controller.v1;
 
 import java.util.Collections;
-import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,16 +17,19 @@ import com.kimscooperation.kimsboard.advice.exception.CIdSigninFailedException;
 import com.kimscooperation.kimsboard.advice.exception.CUserExistException;
 import com.kimscooperation.kimsboard.advice.exception.CUserNotFoundException;
 import com.kimscooperation.kimsboard.config.security.JwtTokenProvider;
-import com.kimscooperation.kimsboard.domain.user.Users;
+import com.kimscooperation.kimsboard.entity.user.Users;
 import com.kimscooperation.kimsboard.model.CommonResult;
 import com.kimscooperation.kimsboard.model.KakaoProfile;
 import com.kimscooperation.kimsboard.model.SingleResult;
+import com.kimscooperation.kimsboard.model.user.ParamsJoin;
 import com.kimscooperation.kimsboard.model.user.ParamsUser;
 import com.kimscooperation.kimsboard.repository.UserRepository;
 import com.kimscooperation.kimsboard.service.ResponseService;
 import com.kimscooperation.kimsboard.service.social.KakaoService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +46,7 @@ public class SignController {
 	private final PasswordEncoder passwordEncoder;
 	private final KakaoService kakaoService;
 
-	@ApiOperation(value = "로그인", notes = "회원 로그인을 한다.")
+	@ApiOperation(value = "로그인", notes = "일반 로그인을 처리하는 API")
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
 		public SingleResult<String> signin(@Valid @RequestBody ParamsUser paramsUser) {
 		String userId = paramsUser.getUserId();
@@ -57,11 +57,13 @@ public class SignController {
 		return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user.getUserNum()), user.getRoles()));
 	}
 
-	@ApiOperation(value = "가입", notes = "회원가입을 한다.")
+	@ApiOperation(value = "가입", notes = "비회원이 회원에 가입하기 위한 요청을 처리하는 API")
 	@RequestMapping(value = "/signup", method = RequestMethod.POST)
-	public CommonResult signup(@ApiParam(value = "회원ID", required = true) @RequestParam String userId, @ApiParam(value = "비밀번호", required = true) @RequestParam String password,
-			@ApiParam(value = "이름", required = true) @RequestParam String name) {
-		userRepository.save(Users.builder().userId(userId).password(passwordEncoder.encode(password)).name(name).roles(Collections.singletonList("ROLE_USER")).build());
+	public CommonResult signup(@Valid @RequestBody ParamsJoin paramsJoin) {
+		userRepository.save(Users.builder().userId(paramsJoin.getUserId())
+				.password(passwordEncoder.encode(paramsJoin.getPassword())).name(paramsJoin.getName())
+				.phone(paramsJoin.getPhone()).address(paramsJoin.getAddress())
+				.roles(Collections.singletonList("ROLE_USER")).build());
 		return responseService.getSuccessResult();
 	}
 

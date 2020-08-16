@@ -1,4 +1,4 @@
-package com.kimscooperation.kimsboard.domain.board;
+package com.kimscooperation.kimsboard.entity.board;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 
-import com.kimscooperation.kimsboard.domain.common.CommonDateEntity;
-import com.kimscooperation.kimsboard.domain.user.Users;
+import com.kimscooperation.kimsboard.entity.common.CommonDateEntity;
+import com.kimscooperation.kimsboard.entity.user.Users;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -32,7 +32,8 @@ export default new Vuex.Store({
         console.log(response.data)
       })
       .catch(function(error) {
-        alert("알수 없는 오류가 발생하였습니다.");
+        console.log(error.response.data);
+        //alert("알수 없는 오류가 발생하였습니다.");
       });
     },
     LOGOUT({ commit }) {

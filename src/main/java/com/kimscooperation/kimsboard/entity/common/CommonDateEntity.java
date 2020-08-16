@@ -1,4 +1,4 @@
-package com.kimscooperation.kimsboard.domain.common;
+package com.kimscooperation.kimsboard.entity.common;
 
 import java.time.LocalDateTime;
 

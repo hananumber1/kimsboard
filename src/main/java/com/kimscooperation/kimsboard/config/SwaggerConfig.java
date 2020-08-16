@@ -28,7 +28,7 @@ public class SwaggerConfig {
 				.groupName(version)
 				.apiInfo(this.apiInfo())
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("com.kimscooperation.kimsboard.controller.v1"))
+				.apis(RequestHandlerSelectors.basePackage("com.kimscooperation.kimsboard.controller"))
 				.paths(PathSelectors.any())
 				.build()
 				.useDefaultResponseMessages(false);
@@ -37,7 +37,7 @@ public class SwaggerConfig {
 	
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title(title).description("RestAPI 요청과 응답에 필요한 Documentation").build();
+		return new ApiInfoBuilder().title(title).description("RestAPI 요청과 응답에 필요한 Documentation").contact(new Contact("JunkiKim","https://github.com/zxc7023/kimsboard","zxc7023@gmail.com")).build();
 
 	}
 
