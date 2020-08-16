@@ -28,10 +28,10 @@ import com.kimscooperation.kimsboard.service.ResponseService;
 import com.kimscooperation.kimsboard.service.social.KakaoService;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import lombok.RequiredArgsConstructor;
 
 @Api(tags = { "1. Sign" })
@@ -55,6 +55,15 @@ public class SignController {
 		if (!passwordEncoder.matches(password, user.getPassword()))
 			throw new CIdSigninFailedException();
 		return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user.getUserNum()), user.getRoles()));
+	}
+
+	@ApiOperation(value = "아이디 중복확인", notes = "받아온 아이디 값으로 회원이 존재하는 확인합니다.")
+	@ApiResponses(value={
+		@ApiResponse(code = 200, message = "data의 값이 true이면 중복된 아이디 있음 false면 없음")
+	})
+	@RequestMapping(value = "/user/userid", method = RequestMethod.GET)
+	public CommonResult checkid(@RequestParam String userId){
+		return responseService.getSingleResult(userRepository.findByUserId(userId).isPresent());
 	}
 
 	@ApiOperation(value = "가입", notes = "비회원이 회원에 가입하기 위한 요청을 처리하는 API")
