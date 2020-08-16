@@ -29,11 +29,15 @@ export default new Vuex.Store({
       .then(function(response) {
         commit("LOGIN", response.data.data)
         localStorage.setItem("userLoginToken", response.data.data);
+        this.$router.push("/");
         console.log(response.data)
       })
       .catch(function(error) {
-        console.log(error.response.data);
-        //alert("알수 없는 오류가 발생하였습니다.");
+        if(error.response.data===-1001){
+          alert('아이디 또는 비밀번호를 확인해주세요.');
+        } else {
+          alert("알수 없는 오류가 발생하였습니다.");
+        }
       });
     },
     LOGOUT({ commit }) {
