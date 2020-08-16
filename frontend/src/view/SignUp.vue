@@ -9,7 +9,7 @@
       <label for="login_psw">비밀번호</label>
     </div>
     <div class="name">
-      <input type="password" id="login_psw" v-model="name" />
+      <input type="text" id="login_psw" v-model="name" />
       <label for="login_psw">이름</label>
     </div>
     <button type="button" @click="setSignUp">회원가입</button>
@@ -40,11 +40,12 @@ export default {
             name: this.name,
           })
           .then(function(response) {
+            console.log(response.data)
             alert("회원가입이 완료 되었습니다. 게시글페이지로 이동합니다.");
-            this.$router.push("board");
+            this.$router.push("/");
           })
           .catch(function(error) {
-            console.log(error);
+            console.log(error.data);
           });
       }
     },

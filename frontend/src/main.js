@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from 'vuex'
-import 'es6-promise/auto'
+// import 'es6-promise/auto'
 Vue.use(Vuex)
 
 import App from "./App.vue";
