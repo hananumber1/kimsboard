@@ -9,7 +9,7 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
-import com.kimscooperation.kimsboard.domain.user.Users;
+import com.kimscooperation.kimsboard.entity.user.Users;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,9 +36,7 @@ public class JwtTokenProvider {
 	private String secretKey;
 
 	// 토큰의 유효 시간을 1시간으로 설정. 1시간이후는 새롭게 refresh 해야함.
-	//private final long tokenValidMilisecond = 1000L * 60 * 60;
-	private final long tokenValidMilisecond = 1000L * 60;
-
+	private final long tokenValidMilisecond = 1000L * 60 * 60;
 
 	/**
 	 * was가 실행될 때 init()메소드를 실행하고 secretKey를 암호화

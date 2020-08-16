@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kimscooperation.kimsboard.domain.board.Board;
-import com.kimscooperation.kimsboard.domain.board.Post;
+import com.kimscooperation.kimsboard.entity.board.Board;
+import com.kimscooperation.kimsboard.entity.board.Post;
 import com.kimscooperation.kimsboard.model.CommonResult;
 import com.kimscooperation.kimsboard.model.ListResult;
 import com.kimscooperation.kimsboard.model.SingleResult;

@@ -1,4 +1,4 @@
-package com.kimscooperation.kimsboard.domain.board;
+package com.kimscooperation.kimsboard.entity.board;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +29,4 @@ public class Board {
 	
 	@Column(nullable = false, length = 100)
 	private String name;
-
-	//고집좀 부리지마
 }

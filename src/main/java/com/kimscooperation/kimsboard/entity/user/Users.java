@@ -1,4 +1,4 @@
-package com.kimscooperation.kimsboard.domain.user;
+package com.kimscooperation.kimsboard.entity.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -43,8 +43,15 @@ public class Users implements UserDetails {
 	@Column(name = "name")
 	private String name;
 
-	@Column(length = 100)
+	@Column(length = 100, name="provider")
 	private String provider;
+
+	@Column(name="phone")
+	private String phone;
+
+	@Column(name="address")
+	private String address;
+
 
 	@Builder.Default // roles가 null인 경우에 ArrayList로 초기화
 	@ElementCollection(fetch = FetchType.EAGER) //값 타입을 하나이상 보관하기 위해서 씀 
