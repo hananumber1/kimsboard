@@ -33,7 +33,7 @@ public class Users implements UserDetails {
 	@Column(name = "user_num")
 	private long userNum;
 
-	@Column(name = "user_id", nullable = false)
+	@Column(name = "user_id", nullable = false, unique = true)
 	private String userId;
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //JSON 결과로 출력하지 않을 경우 사용
