@@ -3,6 +3,7 @@ package com.kimscooperation.kimsboard.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -25,19 +26,19 @@ public class SwaggerConfig {
 		
 		return new Docket(DocumentationType.SWAGGER_2)
 				.groupName(version)
+				.apiInfo(this.apiInfo())
 				.select()
 				.apis(RequestHandlerSelectors.basePackage("com.kimscooperation.kimsboard.controller.v1"))
 				.paths(PathSelectors.any())
 				.build()
-				.useDefaultResponseMessages(false)
-				.apiInfo(apiInfo(title, version));
+				.useDefaultResponseMessages(false);
 	}
 	
 	
 
-	private ApiInfo apiInfo(String title, String version) {
-		return new ApiInfo(title, "Frontend와의 협업을 위해 작성", version, "termsOfServiceUrl",
-				new Contact("JunkiKim", "https://github.com/zxc7023/kimsboard", "zxc7023@gmail.com"), null, null);
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title(title).description("RestAPI 요청과 응답에 필요한 Documentation").build();
+
 	}
 
 }
