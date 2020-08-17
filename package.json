@@ -11,6 +11,7 @@
     "history": "^4.10.1",
     "is-promise": "^2.2.2",
     "isarray": "^0.0.1",
+    "js-cookie": "^2.2.1",
     "js-tokens": "^4.0.0",
     "lodash": "^4.17.19",
     "loose-envify": "^1.4.0",
@@ -23,7 +24,8 @@
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
     "value-equal": "^1.0.1",
-    "vuex": "^3.5.1"
+    "vuex": "^3.5.1",
+    "vuex-persistedstate": "^3.1.0"
   },
   "devDependencies": {
     "html-webpack-plugin": "^4.3.0",

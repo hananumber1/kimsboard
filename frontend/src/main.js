@@ -13,9 +13,9 @@ import './utils/index'
 // component 등록
 Vue.component('Header', require('./component/layout/Header').default);
 Vue.component('Body', require('./component/layout/Body').default);
-Vue.component('SignIn', require('./view/SignIn').default);
-Vue.component('SignUp', require('./view/SignUp').default);
-Vue.component('Board', require('./view/Board').default);
+Vue.component('SignIn', require('./view/sign/SignIn').default);
+Vue.component('SignUp', require('./view/sign/SignUp').default);
+Vue.component('Board', require('./view/board/Board').default);
 
 Vue.config.productionTip = false;
 

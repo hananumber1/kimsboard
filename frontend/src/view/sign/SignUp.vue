@@ -6,7 +6,7 @@
     </div>
     <div class="add">
       <input type="text" id="add" v-model="add" />
-      <label for="add">이메일</label>
+      <label for="add">거주지</label>
     </div>
     <div class="phone">
       <input type="text" id="phone" v-model="phone" />
@@ -60,11 +60,11 @@ export default {
               phone: this.phone,
               userId: this.id,
             })
-            .then(function(response) {
-              alert("회원가입이 완료 되었습니다. 게시글페이지로 이동합니다.");
+            .then((response)=> {
+              alert("회원가입이 완료 되었습니다. 이동합니다.");
               this.$router.push("/");
             })
-            .catch(function(error) {
+            .catch((error)=> {
               console.log(error.data);
             });
         } else {
@@ -79,12 +79,13 @@ export default {
             userId: this.id,
           },
         })
-        .then(function(response) {
-          console.log(response.data)
+        .then((response)=> {
           if (parseInt(response.data.code) === 0) {
             this.idInspection = true;
+            alert('사용가능한 아이디 입니다.')
           } else {
             this.idInspection = false;
+            alert('새로운 아이디를 사용해 주세요')
           }
         })
     },
