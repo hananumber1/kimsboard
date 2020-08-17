@@ -1,9 +1,9 @@
 import Vue from "vue"
 import Router from "vue-router"
-import App from '../App'
-import SignIn from '../view/SignIn'
-import SignUp from '../view/SignUp'
-import Board from '../view/Board'
+import Home from '../view/Home'
+import SignIn from '../view/sign/SignIn'
+import SignUp from '../view/sign/SignUp'
+import Board from '../view/board/Board'
 
 Vue.use(Router)
 
@@ -12,8 +12,8 @@ export default new Router({
   routes: [
     {
       path: "/",
-      name: "Board",
-        component: Board,
+      name: "Home",
+        component: Home,
     },
     {
         path: "/board",

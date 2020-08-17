@@ -1,14 +1,21 @@
 import Vue from "vue"
 import Vuex from "vuex"
 import axios from "axios"
-
+import createPersistedState from "vuex-persistedstate";
+import Cookies from 'js-cookie';
+ 
 Vue.use(Vuex)
-
 export default new Vuex.Store({
   state: {
     userLoginToken: null,
   },
-  getters: {},
+  plugins: [createPersistedState({
+    storage: {
+      getItem: key => Cookies.get(key),
+      setItem: (key, value) => Cookies.set(key, value),
+      removeItem: key => Cookies.remove(key)
+    }
+  })],
   mutations: {
     LOGIN(state, { accessToken }) {
       state.userLoginToken = accessToken
@@ -26,17 +33,18 @@ export default new Vuex.Store({
         userId: id,
         password: password,
       })
-      .then(function(response) {
+      .then((response)=> {
         commit("LOGIN", response.data.data)
+        // axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.data}`;
         localStorage.setItem("userLoginToken", response.data.data);
-        this.$router.push("/");
         console.log(response.data)
       })
-      .catch(function(error) {
+      .catch((error)=> {
+        console.log(error.response)
         if(error.response.data===-1001){
-          alert('아이디 또는 비밀번호를 확인해주세요.');
+          alert(error.response.data.msg);
         } else {
-          alert("알수 없는 오류가 발생하였습니다.");
+          alert(error.response.data.msg);
         }
       });
     },
