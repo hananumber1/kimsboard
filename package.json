@@ -20,6 +20,7 @@
     "path-to-regexp": "^1.8.0",
     "prop-types": "^15.7.2",
     "regenerator-runtime": "^0.13.7",
+    "style-loader": "^1.2.1",
     "symbol-observable": "^1.2.0",
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
@@ -27,7 +28,13 @@
     "vuex": "^3.5.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^4.2.1",
     "html-webpack-plugin": "^4.3.0",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
     "vue": "^2.6.11",
     "vue-loader": "^15.9.3",
     "vue-router": "^3.4.3",

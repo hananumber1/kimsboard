@@ -12,6 +12,7 @@ export default new Vuex.Store({
   mutations: {
     LOGIN(state, { accessToken }) {
       state.userLoginToken = accessToken
+      console.log(accessToken)
       return state.userLoginToken
     },
     LOGOUT(state) {
@@ -21,19 +22,22 @@ export default new Vuex.Store({
   },
   actions: {
     LOGIN({ commit }, { id, password }) {
-      return axios
+      console.log(commit)
+      axios
       .post("/v1/signin", {
         userId: id,
         password: password,
       })
-      .then(function(response) {
-        commit("LOGIN", response.data.data)
-        localStorage.setItem("userLoginToken", response.data.data);
-        this.$router.push("/");
-        console.log(response.data)
+      .then(({data})=> {
+        console.log(data)
+        commit("LOGIN", data.data)
+        localStorage.setItem("userLoginToken", data.data);
+        location.href='/'
+      
       })
-      .catch(function(error) {
-        if(error.response.data===-1001){
+      .catch((error)=> {
+        console.log(error)
+        if(error.data===-1001){
           alert('아이디 또는 비밀번호를 확인해주세요.');
         } else {
           alert("알수 없는 오류가 발생하였습니다.");

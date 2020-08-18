@@ -1,6 +1,6 @@
 <template>
   <div id="board">
-    리스트
+    <BoardList/>
   </div>
 </template>
 
