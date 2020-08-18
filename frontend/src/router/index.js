@@ -8,7 +8,7 @@ import Board from '../view/board/Board'
 Vue.use(Router)
 
 export default new Router({
-  mode: "history",
+  mode: "hash",
   routes: [
     {
       path: "/",
