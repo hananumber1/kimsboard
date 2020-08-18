@@ -24,8 +24,7 @@
     "tiny-invariant": "^1.1.0",
     "tiny-warning": "^1.0.3",
     "value-equal": "^1.0.1",
-    "vuex": "^3.5.1",
-    "vuex-persistedstate": "^3.1.0"
+    "vuex": "^3.5.1"
   },
   "devDependencies": {
     "html-webpack-plugin": "^4.3.0",

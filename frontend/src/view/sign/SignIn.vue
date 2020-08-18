@@ -25,7 +25,7 @@ export default {
     setSignIn() {
       const id = this.id;
       const password = this.password;
-      // this.$store.dispatch("LOGIN", { id, password });
+      this.$store.dispatch("LOGIN", { id, password });
     },
   },
 };
