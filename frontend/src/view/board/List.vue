@@ -1,13 +1,12 @@
 <template>
-  <div id="board">
-    <BoardNav/>
-    <BoardList/>
-  </div>
+  <section id="boardList">
+    <router-view />
+  </section>
 </template>
 
 <script>
 export default {
-  name: "Board",
+  name: "BoardList",
 };
 </script>
 
