@@ -1,6 +1,5 @@
 <template>
   <div id="board">
-    <BoardNav/>
     <BoardList/>
   </div>
 </template>
