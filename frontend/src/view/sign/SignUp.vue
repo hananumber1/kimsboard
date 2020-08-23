@@ -53,7 +53,7 @@ export default {
       } else {
         if (this.idInspection) {
           axios
-            .post("/v1/signup", {
+            .post("/api/v1/signup", {
               address: this.add,
               name: this.name,
               password: this.password,
@@ -74,18 +74,21 @@ export default {
     },
     checkUserId() {
       axios
-        .get("/v1/user/userid", {
+        .get("/api/v1/user/userid", {
           params: {
             userId: this.id,
           },
         })
         .then(({data})=> {
-          if (parseInt(data.code) === 0) {
-            this.idInspection = true;
-            alert('사용가능한 아이디 입니다.')
-          } else {
-            this.idInspection = false;
-            alert('새로운 아이디를 사용해 주세요')
+          console.log(data.data);
+          if(data.code===0){
+            if(data.data === true){
+              this.idInspection = false;
+              alert('중복된 아이디 입니다.')
+            }else{
+              this.idInspection = true;
+              alert('사용할 수 있는 아이디 입니다.')
+            }
           }
         })
     },
