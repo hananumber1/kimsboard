@@ -2,7 +2,7 @@
   <div>
     <Header />
     <Body>
-      <router-view></router-view>
+      <router-view/>
     </Body>
   </div>
 </template>

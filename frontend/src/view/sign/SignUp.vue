@@ -1,25 +1,25 @@
 <template>
   <div id="SignUp">
     <div class="name">
-      <input type="text" id="name" v-model="name" />
       <label for="name">이름</label>
+      <input type="text" id="name" v-model="name" />
     </div>
     <div class="add">
-      <input type="text" id="add" v-model="add" />
       <label for="add">거주지</label>
+      <input type="text" id="add" v-model="add" />
     </div>
     <div class="phone">
-      <input type="text" id="phone" v-model="phone" />
       <label for="phone">핸드폰번호</label>
+      <input type="text" id="phone" v-model="phone" />
     </div>
     <div class="id">
-      <input type="text" id="login_id" v-model="id" />
       <label for="login_id">아이디</label>
+      <input type="text" id="login_id" v-model="id" />
       <button type="button" @click="checkUserId">중복검사</button>
     </div>
     <div class="psw">
-      <input type="password" id="login_psw" v-model="password" />
       <label for="login_psw">비밀번호</label>
+      <input type="password" id="login_psw" v-model="password" />
     </div>
     <button type="button" @click="setSignUp">회원가입</button>
   </div>
@@ -60,7 +60,7 @@ export default {
               phone: this.phone,
               userId: this.id,
             })
-            .then((response)=> {
+            .then(({data})=> {
               alert("회원가입이 완료 되었습니다. 이동합니다.");
               this.$router.push("/");
             })
@@ -79,8 +79,8 @@ export default {
             userId: this.id,
           },
         })
-        .then((response)=> {
-          if (parseInt(response.data.code) === 0) {
+        .then(({data})=> {
+          if (parseInt(data.code) === 0) {
             this.idInspection = true;
             alert('사용가능한 아이디 입니다.')
           } else {
