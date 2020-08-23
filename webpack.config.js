@@ -13,13 +13,15 @@ module.exports = {
   },
   devServer: {
     proxy: {
-        '/': {
-            "target": 'http://localhost:8080/',
-            "pathRewrite": { '^/': '' },
+        '/api': {
+            "target": 'http://localhost:8080',
+            "pathRewrite": {'^/api' : ''},
             "changeOrigin": true,
             "secure": false
         }
-    }
+    },
+     historyApiFallback: true,
+    
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],

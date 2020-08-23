@@ -4,6 +4,14 @@ spring:
     active: local
     include:
     - key-profile
+  # mustache:
+  #   prefix: classpath:/static/
+  #   suffix: .html
+  # mvc:
+  #   static-path-pattern: /static/**
+  # resources:
+  #   static-locations: classpath:/static/
+  #   add-mappings: true
   jpa:
     hibernate:
       ddl-auto: update #데이터 베이스 초기화 전략 사용 안함

@@ -9,8 +9,7 @@ import BoardList from '../view/board/List'
 Vue.use(Router)
 
 export default new Router({
-  mode: "hash",
-  // mode: "history",
+  mode: "history",
   routes: [
     {
       path: "/",

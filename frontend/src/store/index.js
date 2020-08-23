@@ -22,9 +22,8 @@ export default new Vuex.Store({
   },
   actions: {
     LOGIN({ commit }, { id, password }) {
-      console.log(commit)
-      axios
-      .post("/v1/signin", {
+      return axios
+      .post("/api/v1/signin", {
         userId: id,
         password: password,
       })
@@ -36,9 +35,8 @@ export default new Vuex.Store({
       
       })
       .catch((error)=> {
-        console.log(error)
-        if(error.data===-1001){
-          alert('아이디 또는 비밀번호를 확인해주세요.');
+        if(error.response.data.code===-1001){
+          alert(error.response.data.msg);
         } else {
           alert("알수 없는 오류가 발생하였습니다.");
         }
