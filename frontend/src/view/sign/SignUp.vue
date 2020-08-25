@@ -1,5 +1,5 @@
 <template>
-  <div id="SignUp">
+  <form id="SignUp" @submit="setSignUp">
     <div class="name">
       <label for="name">이름</label>
       <input type="text" id="name" v-model="name" />
@@ -21,8 +21,8 @@
       <label for="login_psw">비밀번호</label>
       <input type="password" id="login_psw" v-model="password" />
     </div>
-    <button type="button" @click="setSignUp">회원가입</button>
-  </div>
+    <button type="submit">회원가입</button>
+  </form>
 </template>
 
 <script>
@@ -40,16 +40,11 @@ export default {
     };
   },
   methods: {
-    setSignUp() {
+    setSignUp(e) {
+      e.preventDefault();
       var router = this.$router;
-      if (
-        this.id === null ||
-        this.password === null ||
-        this.name === null ||
-        this.add === null ||
-        this.phone === null
-      ) {
-        alert("항목을 다 입력해 주세요.");
+      if(!this.add || !this.name || !this.password || !this.phone || !this.id ){
+        alert('항목을 모두 입력해 주세요.')
       } else {
         if (this.idInspection) {
           axios
@@ -69,7 +64,7 @@ export default {
             });
         } else {
           alert('아이디 중복검사를 확인해 주세요')
-        }
+        } 
       }
     },
     checkUserId() {

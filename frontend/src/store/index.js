@@ -11,13 +11,12 @@ export default new Vuex.Store({
   getters: {},
   mutations: {
     LOGIN(state, { accessToken }) {
-      state.userLoginToken = accessToken
-      console.log(accessToken)
-      return state.userLoginToken
+      state.userLoginToken = accessToken;
+      return state.userLoginToken;
     },
     LOGOUT(state) {
-      state.userLoginToken = null
-      return state.userLoginToken
+      state.userLoginToken = null;
+      return state.userLoginToken;
     },
   },
   actions: {
@@ -35,15 +34,17 @@ export default new Vuex.Store({
       
       })
       .catch((error)=> {
+        console.log(error.response)
         if(error.response.data.code===-1001){
           alert(error.response.data.msg);
         } else {
-          alert("알수 없는 오류가 발생하였습니다.");
+          alert(error.response.data.msg);
         }
       });
     },
     LOGOUT({ commit }) {
-      commit("LOGOUT")
+      commit("LOGOUT");
+      location.href='/';
       localStorage.removeItem("userLoginToken");
     },
   },
