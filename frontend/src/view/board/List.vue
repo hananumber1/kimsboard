@@ -5,7 +5,7 @@
     <button type="button" v-if="isWrite" @click="showWrite = !showWrite">
       글 작성하기
     </button>
-    <form v-if="showWrite" @submit.prevent="setBoardUpload">
+    <form v-if="showWrite" @submit="setBoardUpload">
       <div class="board_title">
         <label for="board_title">제목</label>
         <input type="text" id="board_title" v-model="boardTitle" />
@@ -20,7 +20,7 @@
       <h1>게시글 {{ boardList.length }}개</h1>
       <ul>
         <li v-for="(list, index) in boardList" :key="'list' + index">
-          {{ list }}
+          제목 : {{ list.title }} / 내용: {{list.content}}
         </li>
       </ul>
     </div>
@@ -83,6 +83,8 @@ export default {
         })
         .then(({ data }) => {
           console.log(data);
+          this.$forceUpdate();
+          // location.reload;
         })
         .catch((error) => {
           console.log(error);
