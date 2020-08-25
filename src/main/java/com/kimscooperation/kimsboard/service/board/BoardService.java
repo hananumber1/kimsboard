@@ -48,9 +48,9 @@ public class BoardService {
 	}
 
 	// 게시물을 등록합니다. 게시물의 회원userId가 조회되지 않으면 CUserNotFoundException 처리합니다.
-	public Post writePost(String userId, String boardName, ParamsPost paramsPost) {
+	public Post writePost(Long userNum, String boardName, ParamsPost paramsPost) {
 		Board board = findBoard(boardName);
-		Post post = new Post(userRepository.findByUserId(userId).orElseThrow(CUserNotFoundException::new), board, paramsPost.getWriter(), paramsPost.getTitle(), paramsPost.getContent());
+		Post post = new Post(userRepository.findByUserNum(userNum).orElseThrow(CUserNotFoundException::new), board, "test", paramsPost.getTitle(), paramsPost.getContent());
 		return postRepository.save(post);
 	}
 

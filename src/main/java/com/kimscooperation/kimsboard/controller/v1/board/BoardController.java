@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -59,13 +60,13 @@ public class BoardController {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "게시판 글 작성", notes = "게시판에 글을 작성한다.")
 	@PostMapping(value = "/{boardName}/post")
-	public SingleResult<Post> post(@PathVariable String boardName, @Valid @ModelAttribute ParamsPost post) {
+	public SingleResult<Post> post(@PathVariable String boardName, @RequestBody ParamsPost post) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String uid = authentication.getName();
 		System.out.println(boardName);
 		System.out.println(post);
 		System.out.println(uid);
-		return responseService.getSingleResult(boardService.writePost(uid, boardName, post));
+		return responseService.getSingleResult(boardService.writePost(Long.parseLong(uid), boardName, post));
 	}
 
 	@ApiOperation(value = "게시판 글 상세", notes = "게시판 글 상세정보를 조회한다.")
