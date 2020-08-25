@@ -41,7 +41,7 @@ export default {
     };
   },
   updated() {
-    console.log(localStorage.getItem("userLoginToken"));
+    //console.log(localStorage.getItem("userLoginToken"));
   },
   computed: {
     isWrite() {
@@ -61,7 +61,7 @@ export default {
       this.page = val;
     },
     getBoardList() {
-      axios.get("/v1/board/" + this.page + "/posts").then(({ data }) => {
+      axios.get("/api/v1/board/" + this.page + "/posts").then(({ data }) => {
         if (data.code === 0) {
           this.boardList = data.list;
         }
@@ -69,15 +69,17 @@ export default {
     },
     setBoardUpload() {
       const token = localStorage.getItem("userLoginToken");
+      console.log(token)
       axios
-        .post("/v1/board/" + this.page + "/post", {
+        .post("/api/v1/board/" + this.page + "/post", {
           boardName: this.page,
-          writer: "test",
           title: this.boardTitle,
           content: this.boardContent,
-          headers: {
-            Authorization: token,
-          },
+        },
+        { 
+          headers : {
+            'X-AUTH-TOKEN': token
+          }
         })
         .then(({ data }) => {
           console.log(data);

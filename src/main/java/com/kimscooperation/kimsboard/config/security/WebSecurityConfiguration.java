@@ -11,6 +11,10 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import lombok.RequiredArgsConstructor;
 
@@ -37,11 +41,26 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/").permitAll()
 				.antMatchers("/*/users").hasRole("ADMIN") // users요청시 admin으로 설정
 				.anyRequest().hasRole("USER") // 그외 나머지 요청은 모두 user로 권한을 가진 사람만
+				.and().cors()
 				.and().exceptionHandling().accessDeniedHandler(new CustomAccessDeniedHandler()) // 자신의 권한이 아닌 리소스를 요청할 때
 				.and().exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint()) //잘못된 토큰을 가지고 인증 요청을 했을 때
 				.and().addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class); //JWT 토큰을 이용한 인증과정을 Spring Security Filter로 등록 
 	}
 
+	@Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.addAllowedOrigin("http://localhost:8081");
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+	}
+	
 	@Override // ignore check swagger resource
 	public void configure(WebSecurity web) {
 		web.ignoring().antMatchers("/v2/api-docs", "/swagger-resources/**", "/swagger-ui.html", "/webjars/**", "/swagger/**","/js/**" );
