@@ -1,8 +1,12 @@
 <template>
   <nav id="boardNav">
     <ul>
-      <li v-for="list in page" :key="list.url" @click="clickBoardNav(list.url)"
-      :class="{'active':list.url===activePage}">
+      <li
+        v-for="list in page"
+        :key="list.url"
+        @click="clickBoardNav(list.url)"
+        :class="{ active: list.url === activePage }"
+      >
         <router-link :to="{ name: 'BoardList', params: { name: list.url } }">
           {{ list.name }}
         </router-link>
@@ -36,8 +40,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#boardNav .active{
-    font-weight: bold;
-    color: blue;
-
-}</style>
+#boardNav .active {
+  font-weight: bold;
+  color: blue;
+}
+</style>

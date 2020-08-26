@@ -21,7 +21,7 @@
       <label for="login_psw">비밀번호</label>
       <input type="password" id="login_psw" v-model="password" />
     </div>
-    <button type="submit">회원가입</button>
+    <button type="submit" :disabled="disable">회원가입</button>
   </form>
 </template>
 
@@ -39,14 +39,20 @@ export default {
       idInspection: false,
     };
   },
+  computed: {
+    disable() {
+      if(!this.add || !this.name || !this.password || !this.phone || !this.id ){
+        return true
+      } else {
+        return false
+      }
+    }
+  },
   methods: {
     setSignUp(e) {
       e.preventDefault();
       var router = this.$router;
-      if(!this.add || !this.name || !this.password || !this.phone || !this.id ){
-        alert('항목을 모두 입력해 주세요.')
-      } else {
-        if (this.idInspection) {
+      if (this.idInspection) {
           axios
             .post("/api/v1/signup", {
               address: this.add,
@@ -65,7 +71,6 @@ export default {
         } else {
           alert('아이디 중복검사를 확인해 주세요')
         } 
-      }
     },
     checkUserId() {
       axios
