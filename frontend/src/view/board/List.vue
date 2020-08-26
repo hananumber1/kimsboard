@@ -1,26 +1,29 @@
 <template>
   <section id="boardList">
     <BoardNav @page="getBoardNav" />
-    <router-view />
     <button type="button" v-if="isWrite" @click="showWrite = !showWrite">
       글 작성하기
     </button>
-    <form v-if="showWrite" @submit="setBoardUpload">
-      <div class="board_title">
-        <label for="board_title">제목</label>
-        <input type="text" id="board_title" v-model="boardTitle" />
+    <form v-if="showWrite" @submit="setBoardUpload" class="board_form">
+      <div class="board_form_title">
+        <label for="board_form_title">제목</label>
+        <input type="text" id="board_form_title" v-model="boardTitle" />
       </div>
-      <div class="board_content">
-        <label for="board_content">내용</label>
-        <textarea id="board_content" v-model="boardContent" />
+      <div class="board_form_content">
+        <label for="board_form_content">내용</label>
+        <textarea id="board_form_content" v-model="boardContent" />
       </div>
       <button type="submit">작성하기</button>
     </form>
-    <div>
-      <h1>게시글 {{ boardList.length }}개</h1>
+    <div class="board_list">
+      <h1>
+        {{ page === "notice" ? "공지사항" : "자유게시판" }} </br>
+        게시글 {{ boardList.length }}개
+      </h1>
+      <p>글번호 / 제목 / 내용</p>
       <ul>
         <li v-for="(list, index) in boardList" :key="'list' + index">
-          제목 : {{ list.title }} / 내용: {{list.content}}
+          {{ index + 1 }} / {{ list.title }} / {{ list.content }}
         </li>
       </ul>
     </div>
@@ -33,15 +36,12 @@ export default {
   name: "BoardList",
   data() {
     return {
-      page: "",
+      page: "notice",
       boardList: [],
       boardTitle: null,
       boardContent: null,
       showWrite: false,
     };
-  },
-  updated() {
-    //console.log(localStorage.getItem("userLoginToken"));
   },
   computed: {
     isWrite() {
@@ -56,6 +56,15 @@ export default {
   mounted() {
     this.getBoardList();
   },
+  watch: {
+    page(newValue, oldValue) {
+      axios.get("/api/v1/board/" + this.page + "/posts").then(({ data }) => {
+        if (data.code === 0) {
+          this.boardList = data.list;
+        }
+      });
+    },
+  },
   methods: {
     getBoardNav(val) {
       this.page = val;
@@ -69,18 +78,21 @@ export default {
     },
     setBoardUpload() {
       const token = localStorage.getItem("userLoginToken");
-      console.log(token)
+      console.log(this.page);
       axios
-        .post("/api/v1/board/" + this.page + "/post", {
-          boardName: this.page,
-          title: this.boardTitle,
-          content: this.boardContent,
-        },
-        { 
-          headers : {
-            'X-AUTH-TOKEN': token
+        .post(
+          "/api/v1/board/" + this.page + "/post",
+          {
+            boardName: this.page,
+            title: this.boardTitle,
+            content: this.boardContent,
+          },
+          {
+            headers: {
+              "X-AUTH-TOKEN": token,
+            },
           }
-        })
+        )
         .then(({ data }) => {
           console.log(data);
           this.$forceUpdate();
@@ -94,4 +106,13 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.board_list {
+  ul {
+    padding: 0;
+    li {
+      list-style: none;
+    }
+  }
+}
+</style>
