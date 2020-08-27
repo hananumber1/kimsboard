@@ -5,6 +5,7 @@ import SignIn from '../view/sign/SignIn'
 import SignUp from '../view/sign/SignUp'
 import Board from '../view/board/Board'
 import BoardList from '../view/board/List'
+import BoardDetail from '../view/board/Detail'
 
 Vue.use(Router)
 
@@ -34,7 +35,12 @@ export default new Router({
       {
         path: "/board/:name",
         name: "BoardList",
-          component: BoardList,
+        component: BoardList,
       },
+      {
+        path: '/board/:name/detail/:id',
+        name: "BoardDetail", 
+        component: BoardDetail 
+      }
   ],
 })
