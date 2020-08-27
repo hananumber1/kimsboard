@@ -7,21 +7,25 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userLoginToken: null,
-    headerToken:null
+    headerToken:null,
+    detailCategory:null,
+    detailId:null,
   },
   getters: {},
   mutations: {
     LOGIN(state, { accessToken }) {
       state.userLoginToken = accessToken;
-      return state.userLoginToken;
     },
     LOGOUT(state) {
       state.userLoginToken = null;
-      return state.userLoginToken;
     },
     setToken(state, token) {
       state.token = token;
     },
+    saveDetail(state,payload){
+      state.detailCategory = payload.page;
+      state.detailId = payload.id;
+    }
   },
   actions: {
     LOGIN({ commit }, { id, password }) {
@@ -52,4 +56,8 @@ export default new Vuex.Store({
       localStorage.removeItem("userLoginToken");
     },
   },
+  saveDetail({commit}){
+    commit("saveDetail");
+
+  }
 })

@@ -35,11 +35,12 @@ export default new Router({
       {
         path: "/board/:name",
         name: "BoardList",
-          component: BoardList,
-          children: [
-            // when /user/:id/posts is matched
-            { path: '/detail/:id', component: BoardDetail }
-          ]
+        component: BoardList,
       },
+      {
+        path: '/board/:name/detail/:id',
+        name: "BoardDetail", 
+        component: BoardDetail 
+      }
   ],
 })

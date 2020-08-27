@@ -1,21 +1,32 @@
 <template>
   <div id="board_detail">
-    {{info}}
+    {{postDetail}}
   </div>
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "BoardDetail",
   data() {
     return {
-      info:null
+      info:null,
+      postDetail:null
     }
   },
+   created () {
+    this.info = JSON.parse(localStorage.getItem("saveDetail"));
+    this.getBoardDetail();
+  },
   methods: {
-    getBoardDetail(id) {
-      axios.get("/api/v1/board/post/" + id).then(({ data }) => {
-        console.log(data)
+    getBoardDetail() {
+      axios.get("/api/v1/board/post/" + this.info.id).then(({ data }) => {
+        if(data.code ===0){
+          this.postDetail = data.data;
+        
+        } else {
+          this.postDetail = '불러오는데 실패하였습니다.'
+        }
       });
       
     }

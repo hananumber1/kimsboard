@@ -22,8 +22,8 @@
       </h1>
       <p>글번호 / 제목 / 내용 / 작성일</p>
       <ul>
-        <li v-for="(list, index) in boardList" :key="'list' + index">
-          <router-link :to="{ params: { id: list.postId } }">
+        <li v-for="(list, index) in boardList" :key="'list' + index" @click="goToDetail(list.postId)">
+          <router-link :to="{ name: 'BoardDetail',params: { name: page, id: list.postId } }">
           {{ index + 1 }} / {{ list.title }} / {{ list.content }} /{{list.createdAt}}
           </router-link>
         </li>
@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import axios from "axios";
 export default {
   name: "BoardList",
@@ -104,10 +105,13 @@ export default {
           console.log(error);
         });
     },
-    goToDetail(id){
-      axios.get("/api/v1/board/post/" + id).then(({ data }) => {
-        console.log(data)
-      });
+    goToDetail(pageId){
+      const value = {
+        page:this.page,
+        id:pageId
+      }
+      this.$store.commit('saveDetail', {value});
+      localStorage.setItem("saveDetail", JSON.stringify(value));
 
     }
   },
