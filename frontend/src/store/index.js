@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userLoginToken: null,
+    headerToken:null
   },
   getters: {},
   mutations: {
@@ -17,6 +18,9 @@ export default new Vuex.Store({
     LOGOUT(state) {
       state.userLoginToken = null;
       return state.userLoginToken;
+    },
+    setToken(state, token) {
+      state.token = token;
     },
   },
   actions: {

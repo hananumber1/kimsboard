@@ -17,13 +17,15 @@
     </form>
     <div class="board_list">
       <h1>
-        {{ page === "notice" ? "공지사항" : "자유게시판" }} </br>
+        {{ page === "notice" ? "공지사항" : "자유게시판" }} <br>
         게시글 {{ boardList.length }}개
       </h1>
-      <p>글번호 / 제목 / 내용</p>
+      <p>글번호 / 제목 / 내용 / 작성일</p>
       <ul>
         <li v-for="(list, index) in boardList" :key="'list' + index">
-          {{ index + 1 }} / {{ list.title }} / {{ list.content }}
+          <router-link :to="{ params: { id: list.postId } }">
+          {{ index + 1 }} / {{ list.title }} / {{ list.content }} /{{list.createdAt}}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -102,6 +104,12 @@ export default {
           console.log(error);
         });
     },
+    goToDetail(id){
+      axios.get("/api/v1/board/post/" + id).then(({ data }) => {
+        console.log(data)
+      });
+
+    }
   },
 };
 </script>
