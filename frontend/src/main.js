@@ -18,6 +18,7 @@ Vue.component('SignUp', require('./view/sign/SignUp').default);
 Vue.component('Board', require('./view/board/Board').default);
 Vue.component('BoardNav', require('./view/board/Nav').default);
 Vue.component('BoardList', require('./view/board/List').default);
+Vue.component('BoardDetail', require('./view/board/Detail').default);
 
 Vue.config.productionTip = false;
 

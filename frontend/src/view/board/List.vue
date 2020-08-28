@@ -17,13 +17,15 @@
     </form>
     <div class="board_list">
       <h1>
-        {{ page === "notice" ? "공지사항" : "자유게시판" }} </br>
+        {{ page === "notice" ? "공지사항" : "자유게시판" }} <br>
         게시글 {{ boardList.length }}개
       </h1>
-      <p>글번호 / 제목 / 내용</p>
+      <p>글번호 / 제목 / 내용 / 작성일</p>
       <ul>
-        <li v-for="(list, index) in boardList" :key="'list' + index">
-          {{ index + 1 }} / {{ list.title }} / {{ list.content }}
+        <li v-for="(list, index) in boardList" :key="'list' + index" @click="goToDetail(list.postId)">
+          <router-link :to="{ name: 'BoardDetail',params: { name: page, id: list.postId } }">
+          {{ index + 1 }} / {{ list.title }} / {{ list.content }} /{{list.createdAt}}
+          </router-link>
         </li>
       </ul>
     </div>
@@ -31,6 +33,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import axios from "axios";
 export default {
   name: "BoardList",
@@ -102,6 +105,15 @@ export default {
           console.log(error);
         });
     },
+    goToDetail(pageId){
+      const value = {
+        page:this.page,
+        id:pageId
+      }
+      this.$store.commit('saveDetail', {value});
+      localStorage.setItem("saveDetail", JSON.stringify(value));
+
+    }
   },
 };
 </script>
