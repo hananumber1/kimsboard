@@ -13,6 +13,7 @@ import com.kimscooperation.kimsboard.entity.board.Board;
 import com.kimscooperation.kimsboard.entity.board.Post;
 import com.kimscooperation.kimsboard.entity.user.Users;
 import com.kimscooperation.kimsboard.model.board.ParamsPost;
+import com.kimscooperation.kimsboard.model.board.ParamsWritePost;
 import com.kimscooperation.kimsboard.repository.BoardRepository;
 import com.kimscooperation.kimsboard.repository.PostRepository;
 import com.kimscooperation.kimsboard.repository.UserRepository;
@@ -48,9 +49,10 @@ public class BoardService {
 	}
 
 	// 게시물을 등록합니다. 게시물의 회원userId가 조회되지 않으면 CUserNotFoundException 처리합니다.
-	public Post writePost(Long userNum, String boardName, ParamsPost paramsPost) {
+	public Post writePost(Long userNum, String boardName, ParamsWritePost ParamsWritePost) {
 		Board board = findBoard(boardName);
-		Post post = new Post(userRepository.findByUserNum(userNum).orElseThrow(CUserNotFoundException::new), board, "test", paramsPost.getTitle(), paramsPost.getContent());
+		Users user = userRepository.findByUserNum(userNum).orElseThrow(CUserNotFoundException::new);
+		Post post = new Post(user, board, user.getUsername(), ParamsWritePost.getTitle(), ParamsWritePost.getContent());
 		return postRepository.save(post);
 	}
 
