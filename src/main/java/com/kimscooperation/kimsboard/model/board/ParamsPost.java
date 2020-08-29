@@ -14,7 +14,6 @@ import lombok.Setter;
 public class ParamsPost {
 
 	@NotEmpty
-	@Size(min = 2, max = 50)
 	@ApiModelProperty(value = "작성자명", required = true)
 	private String writer;
 	
