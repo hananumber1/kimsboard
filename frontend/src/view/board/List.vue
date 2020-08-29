@@ -17,14 +17,25 @@
     </form>
     <div class="board_list">
       <h1>
-        {{ page === "notice" ? "공지사항" : "자유게시판" }} <br>
+        {{ page === "notice" ? "공지사항" : "자유게시판" }} <br />
         게시글 {{ boardList.length }}개
       </h1>
       <p>글번호 / 제목 / 내용 / 작성일</p>
       <ul>
-        <li v-for="(list, index) in boardList" :key="'list' + index" @click="goToDetail(list.postId)">
-          <router-link :to="{ name: 'BoardDetail',params: { name: page, id: list.postId } }">
-          {{ index + 1 }} / {{ list.title }} / {{ list.content }} /{{list.createdAt}}
+        <li
+          v-for="(list, index) in boardList"
+          :key="'list' + index"
+          @click="goToDetail(list.postId)"
+        >
+          <router-link
+            :to="{
+              name: 'BoardDetail',
+              params: { name: page, id: list.postId },
+            }"
+          >
+            {{ index + 1 }} / {{ list.title }} / {{ list.content }} /{{
+              list.createdAt
+            }}
           </router-link>
         </li>
       </ul>
@@ -44,12 +55,12 @@ export default {
       boardTitle: null,
       boardContent: null,
       showWrite: false,
+      userToken:null
     };
   },
   computed: {
     isWrite() {
-      const token = localStorage.getItem("userLoginToken");
-      if (token === null) {
+      if (this.userToken === null) {
         return false;
       } else {
         return true;
@@ -67,6 +78,9 @@ export default {
         }
       });
     },
+    "$store.state.saveUserToken"() {
+      this.userToken = this.$store.state.saveUserToken;
+    },
   },
   methods: {
     getBoardNav(val) {
@@ -80,8 +94,6 @@ export default {
       });
     },
     setBoardUpload() {
-      const token = localStorage.getItem("userLoginToken");
-      console.log(this.page);
       axios
         .post(
           "/api/v1/board/" + this.page + "/post",
@@ -92,7 +104,7 @@ export default {
           },
           {
             headers: {
-              "X-AUTH-TOKEN": token,
+              "X-AUTH-TOKEN": this.userToken,
             },
           }
         )
@@ -105,15 +117,13 @@ export default {
           console.log(error);
         });
     },
-    goToDetail(pageId){
+    goToDetail(pageId) {
       const value = {
-        page:this.page,
-        id:pageId
-      }
-      this.$store.commit('saveDetail', {value});
-      localStorage.setItem("saveDetail", JSON.stringify(value));
-
-    }
+        page: this.page,
+        id: pageId,
+      };
+      this.$store.commit("saveDetail", value);
+    },
   },
 };
 </script>

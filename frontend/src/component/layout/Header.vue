@@ -7,7 +7,6 @@
       <router-link to="/signup">회원가입</router-link>
     </template>
     <button type="button" v-else @click="logout">로그아웃</button>
-
   </header>
 </template>
 
@@ -16,28 +15,32 @@ export default {
   data() {
     return {
       userToken: null,
-      isSignin: false,
     };
+  },
+  watch: {
+    "$store.state.userToken"() {
+      this.userToken = this.$store.state.userToken;
+    },
+  },
+  computed: {
+    isSignin() {
+      if (
+        this.userToken === null ||
+        this.userToken === undefined ||
+        this.userToken === ""
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    },
   },
   methods: {
     logout() {
-      var router = this.$router;
       this.$store.dispatch("LOGOUT");
       localStorage.removeItem.userLoginToken;
-      location.href='/';
+      location.href = "/";
     },
-  },
-  created() {
-    this.userToken = localStorage.getItem("userLoginToken");
-    if (
-      this.userToken === null ||
-      this.userToken === undefined ||
-      this.userToken === ""
-    ) {
-      this.isSignin = true;
-    } else {
-      this.isSignin = false;
-    }
   },
 };
 </script>
