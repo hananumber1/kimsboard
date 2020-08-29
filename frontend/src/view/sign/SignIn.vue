@@ -37,7 +37,6 @@ export default {
       e.preventDefault();
       const id = this.id;
       const password = this.password;
-      this.disable = false;
       this.$store.dispatch("LOGIN", { id, password });
     },
   },
