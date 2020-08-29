@@ -1,48 +1,46 @@
 import Vue from "vue"
 import Vuex from "vuex"
+import router from '../router/index'
 import axios from "axios"
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    userLoginToken: null,
-    headerToken:null,
+    userToken:null,
     detailCategory:null,
     detailId:null,
   },
   getters: {},
   mutations: {
-    LOGIN(state, { accessToken }) {
-      state.userLoginToken = accessToken;
-    },
-    LOGOUT(state) {
-      state.userLoginToken = null;
-    },
-    setToken(state, token) {
-      state.token = token;
-    },
     saveDetail(state,payload){
       state.detailCategory = payload.page;
       state.detailId = payload.id;
+    },
+    LOGOUT(state,payload) {
+      state.userToken = payload;
+    },
+    saveUserToken(state,payload){
+      state.userToken = payload
     }
+
+    
   },
   actions: {
     LOGIN({ commit }, { id, password }) {
-      return axios
+      axios
       .post("/api/v1/signin", {
         userId: id,
         password: password,
       })
       .then(({data})=> {
-        console.log(data)
-        commit("LOGIN", data.data)
-        localStorage.setItem("userLoginToken", data.data);
-        location.href='/'
-      
+        // console.log(data)
+        commit("saveUserToken", data.data)
+        localStorage.setItem("saveUserToken", data.data);
+        router.push("/"); 
       })
       .catch((error)=> {
-        console.log(error.response)
+        // console.log(error.response)
         if(error.response.data.code===-1001){
           alert(error.response.data.msg);
         } else {
@@ -52,12 +50,8 @@ export default new Vuex.Store({
     },
     LOGOUT({ commit }) {
       commit("LOGOUT");
-      location.href='/';
-      localStorage.removeItem("userLoginToken");
+      localStorage.removeItem("saveUserToken");
+      router.push("/"); 
     },
   },
-  saveDetail({commit}){
-    commit("saveDetail");
-
-  }
 })

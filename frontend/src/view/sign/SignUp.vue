@@ -62,6 +62,7 @@ export default {
               userId: this.id,
             })
             .then(({data})=> {
+              // console.log(data)
               alert("회원가입이 완료 되었습니다. 이동합니다.");
               this.$router.push("/");
             })
