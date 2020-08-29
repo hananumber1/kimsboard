@@ -11,12 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ParamsPost {
-
-	@NotEmpty
-	@ApiModelProperty(value = "작성자명", required = true)
-	private String writer;
-	
+public class ParamsWritePost {
+    
 	@NotEmpty
 	@Size(min = 2, max = 100)
 	@ApiModelProperty(value = "제목", required = true)

@@ -13,9 +13,11 @@ spring:
   #   static-locations: classpath:/static/
   #   add-mappings: true
   jpa:
-    hibernate:
-      ddl-auto: update #데이터 베이스 초기화 전략 사용 안함
-    show-sql: true 
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        ddl-auto: update
     database: oracle
   messages:
     basename: classpath:/messages/exception

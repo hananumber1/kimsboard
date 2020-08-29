@@ -20,6 +20,7 @@ import com.kimscooperation.kimsboard.model.CommonResult;
 import com.kimscooperation.kimsboard.model.ListResult;
 import com.kimscooperation.kimsboard.model.SingleResult;
 import com.kimscooperation.kimsboard.model.board.ParamsPost;
+import com.kimscooperation.kimsboard.model.board.ParamsWritePost;
 import com.kimscooperation.kimsboard.service.ResponseService;
 import com.kimscooperation.kimsboard.service.board.BoardService;
 
@@ -60,7 +61,7 @@ public class BoardController {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "게시판 글 작성", notes = "게시판에 글을 작성한다.")
 	@PostMapping(value = "/{boardName}/post")
-	public SingleResult<Post> post(@PathVariable String boardName, @RequestBody ParamsPost post) {
+	public SingleResult<Post> post(@PathVariable String boardName, @Valid @RequestBody ParamsWritePost post) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String uid = authentication.getName();
 		System.out.println(boardName);
@@ -78,10 +79,10 @@ public class BoardController {
 	@ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
 	@ApiOperation(value = "게시판 글 수정", notes = "게시판의 글을 수정한다.")
 	@PutMapping(value = "/post/{postId}")
-	public SingleResult<Post> post(@PathVariable long postId, @Valid @ModelAttribute ParamsPost post) {
+	public SingleResult<Post> post(@PathVariable long postId, @Valid @RequestBody ParamsPost post) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String uid = authentication.getName();
-		return responseService.getSingleResult(boardService.updatePost(postId, uid, post));
+		String userNum = authentication.getName();
+		return responseService.getSingleResult(boardService.updatePost(postId, userNum, post));
 	}
 
 	@ApiImplicitParams({ @ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true, dataType = "String", paramType = "header") })
