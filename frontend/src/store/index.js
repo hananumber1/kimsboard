@@ -10,6 +10,7 @@ export default new Vuex.Store({
     userToken:null,
     detailCategory:null,
     detailId:null,
+    loginErroMsg:null
   },
   getters: {},
   mutations: {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
     },
     saveUserToken(state,payload){
       state.userToken = payload
+    },
+    setLoginErroMsg(state,payload){
+      state.loginErroMsg = payload
     }
 
     
@@ -42,9 +46,9 @@ export default new Vuex.Store({
       .catch((error)=> {
         // console.log(error.response)
         if(error.response.data.code===-1001){
-          alert(error.response.data.msg);
+          commit("setLoginErroMsg", error.response.data.msg);
         } else {
-          alert(error.response.data.msg);
+          commit("setLoginErroMsg", error.response.data.msg);
         }
       });
     },

@@ -1,10 +1,17 @@
 <template>
   <section id="boardList">
     <BoardNav @page="getBoardNav" />
-    <button type="button" v-if="isWrite" @click="showWrite = !showWrite">
+    <div class="flex flex-row-reverse">
+    <button
+      class="bg-blue-500 hover:bg-blue-700 text-white text-sm px-2 rounded float-right"
+      v-if="isWrite"
+      @click="showWrite = !showWrite"
+    >
       글 작성하기
     </button>
-    <form v-if="showWrite" @submit="setBoardUpload" class="board_form">
+    </div>
+
+    <form v-if="showWrite" @submit="setBoardUpload" class="board_form w-full">
       <div class="board_form_title">
         <label for="board_form_title">제목</label>
         <input type="text" id="board_form_title" v-model="boardTitle" />
