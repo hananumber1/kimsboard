@@ -1,6 +1,8 @@
 const path = require('path');
 const { VueLoaderPlugin } = require('vue-loader')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const autoprefixer = require('autoprefixer');
+// const tailwindcss = require('tailwindcss');
 
 module.exports = {
   mode: 'development',
@@ -32,15 +34,20 @@ module.exports = {
   module: {
     rules: [
     {
-      test: /\.s[ac]ss$/i,
-      use: [
-        // Creates `style` nodes from JS strings
-        'style-loader',
-        // Translates CSS into CommonJS
-        'css-loader',
-        // Compiles Sass to CSS
-        'sass-loader',
-      ],
+      test: /\.(sass|css|scss)$/,
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: () => [
+                require("autoprefixer")()
+              ],
+            },
+          },
+          'sass-loader',
+        ]
     },{
       test: /\.vue$/,
       use: 'vue-loader'
@@ -52,5 +59,8 @@ plugins: [
   new HtmlWebpackPlugin({
     template: './frontend/src/index.html',
   }),
+  // tailwindcss,
+  //   autoprefixer,
+  
 ]
 }

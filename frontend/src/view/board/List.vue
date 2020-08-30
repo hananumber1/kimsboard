@@ -69,6 +69,7 @@ export default {
   },
   mounted() {
     this.getBoardList();
+    this.userToken = this.$store.state.userToken;
   },
   watch: {
     page(newValue, oldValue) {
@@ -77,9 +78,6 @@ export default {
           this.boardList = data.list;
         }
       });
-    },
-    "$store.state.saveUserToken"() {
-      this.userToken = this.$store.state.saveUserToken;
     },
   },
   methods: {
