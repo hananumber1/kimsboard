@@ -47,16 +47,17 @@ export default {
     putBoardDetail() {
       // 게시글 수정하기
       axios
-        .post("/api/v1/board/post/" + this.postId, {
-          params: {
+        .put("/api/v1/board/post/" + this.postId, {
             content: this.postDetail.content,
             title: this.postDetail.title,
             writer: this.postDetail.writer,
           },
-          headers: {
-            "X-AUTH-TOKEN": this.userToken,
-          },
-        })
+          {
+            headers : {
+            'X-AUTH-TOKEN': this.userToken,
+            }
+          }
+        )
         .then(({ data }) => {
           // console.log(data);
           if(data.code===-1002){
