@@ -2,7 +2,7 @@
   <div id="board_detail">
     <h2>{{ category }}</h2>
     <p>{{ postDetail }}</p>
-    <button type="button" @click="putBoardDetail()">수정하기</button>
+    <button type="button" @click="putBoardDetail()" v-if="userToken !==null">수정하기</button>
   </div>
 </template>
 
@@ -27,11 +27,9 @@ export default {
     "$store.state.detailCategory"() {
       this.category = this.$store.state.detailCategory;
     },
-    "$store.state.saveUserToken"() {
-      this.userToken = this.$store.state.saveUserToken;
-    },
   },
   created() {
+    this.userToken = this.$store.state.userToken;
     if (this.category === null) {
     }
   },
@@ -49,19 +47,21 @@ export default {
     putBoardDetail() {
       // 게시글 수정하기
       axios
-        .put("/api/v1/board/post/" + this.postId, {
+        .post("/api/v1/board/post/" + this.postId, {
           params: {
-            postId: this.postId,
-            writer: this.postDetail.writer,
-            title: this.postDetail.title,
             content: this.postDetail.content,
+            title: this.postDetail.title,
+            writer: this.postDetail.writer,
           },
           headers: {
             "X-AUTH-TOKEN": this.userToken,
           },
         })
         .then(({ data }) => {
-          console.log(data);
+          // console.log(data);
+          if(data.code===-1002){
+            alert(data.msg)
+          }
         })
         .catch((error) => {
           console.log(error);

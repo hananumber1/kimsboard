@@ -6,6 +6,7 @@ Vue.use(Vuex)
 import App from "./App.vue";
 import router from "./router"
 import store from "./store"
+import './asset/style/index.css';
 
 // require('./utils/index');
 import './utils/index'
