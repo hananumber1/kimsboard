@@ -16,29 +16,29 @@
       <button type="submit">작성하기</button>
     </form>
     <div class="board_list">
-      <h1>
-        {{ page === "notice" ? "공지사항" : "자유게시판" }} <br />
-        게시글 {{ boardList.length }}개
-      </h1>
-      <p>글번호 / 제목 / 내용 / 작성일</p>
-      <ul>
-        <li
-          v-for="(list, index) in boardList"
-          :key="'list' + index"
-          @click="goToDetail(list.postId)"
-        >
-          <router-link
-            :to="{
-              name: 'BoardDetail',
-              params: { name: page, id: list.postId },
-            }"
+      <table class="table-fixed">
+        <thead>
+          <tr>
+            <th class="w-1/8 px-3 py-2">글번호</th>
+            <th class="w-1/4 px-3 py-2">제목</th>
+            <th class="w-1/6 px-3 py-2">내용</th>
+            <th class="w-1/8 px-3 py-2">작성일</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="(list, index) in boardList"
+            :key="'list' + index"
+            @click="goToDetail(list.postId)"
+            :class="{ 'bg-gray-100': index % 2 === 0 }"
           >
-            {{ index + 1 }} / {{ list.title }} / {{ list.content }} /{{
-              list.createdAt
-            }}
-          </router-link>
-        </li>
-      </ul>
+            <td class="border px-4 py-2">{{ index + 1 }}</td>
+            <td class="border px-4 py-2">{{ list.title }}</td>
+            <td class="border px-4 py-2">{{ list.content }}</td>
+            <td class="border px-4 py-2">{{ list.createdAt }}</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </section>
 </template>
@@ -55,7 +55,7 @@ export default {
       boardTitle: null,
       boardContent: null,
       showWrite: false,
-      userToken:null
+      userToken: null,
     };
   },
   computed: {
@@ -78,6 +78,9 @@ export default {
           this.boardList = data.list;
         }
       });
+    },
+    "$store.state.userToken"() {
+      this.userToken = this.$store.state.userToken;
     },
   },
   methods: {
@@ -121,6 +124,10 @@ export default {
         id: pageId,
       };
       this.$store.commit("saveDetail", value);
+      this.$router.push({
+        name: "BoardDetail",
+        params: { name: this.page, id: pageId },
+      });
     },
   },
 };

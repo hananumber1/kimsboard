@@ -1,8 +1,37 @@
 <template>
   <div id="board_detail">
-    <h2>{{ category }}</h2>
+    <div class="max-w-sm w-full lg:max-w-full lg:flex">
+      <div
+        class="border-r border-b border-l border-gray-400 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-l lg:rounded-r p-4 flex flex-col justify-between leading-normal"
+      >
+        <div class="mb-8">
+          <div class="text-gray-900 font-bold text-xl mb-2">
+            {{postDetail}}
+          </div>
+          <p class="text-gray-700 text-base">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+            Voluptatibus quia, nulla! Maiores et perferendis eaque,
+            exercitationem praesentium nihil.
+          </p>
+        </div>
+        <div class="flex items-center">
+          <img
+            class="w-10 h-10 rounded-full mr-4"
+            src="/img/jonathan.jpg"
+            alt="Avatar of Jonathan Reinink"
+          />
+          <div class="text-sm">
+            <p class="text-gray-900 leading-none">Jonathan Reinink</p>
+            <p class="text-gray-600">Aug 18</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <p>{{ postDetail }}</p>
-    <button type="button" @click="putBoardDetail()" v-if="userToken !==null">수정하기</button>
+    <button type="button" @click="putBoardDetail()" v-if="userToken !== null">
+      수정하기
+    </button>
   </div>
 </template>
 
@@ -15,29 +44,20 @@ export default {
     return {
       category: null,
       postDetail: null,
-      postId: null,
-      userToken: null,
+      userToken:null
     };
   },
-  watch: {
-    "$store.state.detailId"() {
-      this.postId = this.$store.state.detailId;
-      this.getBoardDetail(this.postId);
-    },
-    "$store.state.detailCategory"() {
-      this.category = this.$store.state.detailCategory;
-    },
-  },
-  created() {
-    this.userToken = this.$store.state.userToken;
-    if (this.category === null) {
-    }
+  mounted () {
+    console.log(this.$store.state.detailId.userToken)
+    this.userToken = this.$store.state.detailId.userToken;
+
   },
   methods: {
     getBoardDetail() {
       // 게시글 정보 가져오기
-      axios.get("/api/v1/board/post/" + this.postId).then(({ data }) => {
+      axios.get("/api/v1/board/post/" + this.$store.state.detailId).then(({ data }) => {
         if (data.code === 0) {
+          console.log(data.data)
           this.postDetail = data.data;
         } else {
           this.postDetail = "불러오는데 실패하였습니다.";
@@ -54,14 +74,14 @@ export default {
           },
           {
             headers : {
-            'X-AUTH-TOKEN': this.userToken,
+            'X-AUTH-TOKEN': this.$store.state.detailId.userToken,
             }
           }
         )
         .then(({ data }) => {
           // console.log(data);
-          if(data.code===-1002){
-            alert(data.msg)
+          if (data.code === -1002) {
+            alert(data.msg);
           }
         })
         .catch((error) => {

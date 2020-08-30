@@ -1,6 +1,6 @@
 <template>
     <div id='Home'>
-home
+        <h1 class="grid grid-cols-1">Home</h1>
     </div>
 </template>
 

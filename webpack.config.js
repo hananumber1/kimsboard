@@ -39,10 +39,12 @@ module.exports = {
           'style-loader',
           'css-loader',
           {
-            loader: "postcss-loader",
+            loader: 'postcss-loader',
             options: {
-              plugins: () => [
-                require("autoprefixer")()
+              ident: 'postcss',
+              plugins: [
+                require('tailwindcss'),
+                require('autoprefixer'),
               ],
             },
           },
