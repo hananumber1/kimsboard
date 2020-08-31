@@ -2,26 +2,63 @@
   <section id="boardList">
     <BoardNav @page="getBoardNav" />
     <div class="flex flex-row-reverse">
-    <button
-      class="bg-blue-500 hover:bg-blue-700 text-white text-sm px-2 rounded float-right"
-      v-if="isWrite"
-      @click="showWrite = !showWrite"
-    >
-      글 작성하기
-    </button>
+      <!-- 글 작성하기 버튼 -->
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white text-sm px-2 py-1 rounded float-right"
+        v-if="isWrite"
+        @click="showWrite = !showWrite"
+      >
+        글 작성하기
+      </button>
     </div>
-
-    <form v-if="showWrite" @submit="setBoardUpload" class="board_form w-full">
-      <div class="board_form_title">
-        <label for="board_form_title">제목</label>
-        <input type="text" id="board_form_title" v-model="boardTitle" />
-      </div>
-      <div class="board_form_content">
-        <label for="board_form_content">내용</label>
-        <textarea id="board_form_content" v-model="boardContent" />
-      </div>
-      <button type="submit">작성하기</button>
-    </form>
+    <!-- 작성하기 폼 -->
+    <div class="w-full mt-4" v-if="showWrite">
+      <form
+        class="bg-white border rounded px-8 pt-6 pb-8 mb-4"
+        @submit="setBoardUpload"
+      >
+        <p class="text-base font-bold text-gray-700 mb-3">게시글 작성하기</p>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="board_form_title"
+          >
+            제목
+          </label>
+          <input
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="board_form_title"
+            type="text"
+            placeholder="제목"
+            v-model="boardTitle"
+          />
+        </div>
+        <div class="mb-4">
+          <label
+            class="block text-gray-700 text-sm font-bold mb-2"
+            for="board_form_content"
+          >
+            내용
+          </label>
+          <textarea
+            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="board_form_content"
+            type="text"
+            placeholder="내용"
+            v-model="boardContent"
+          />
+        </div>
+        <div class="flex items-center justify-between">
+          <button
+            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            type="submit"
+          >
+            작성하기
+          </button>
+        </div>
+      </form>
+    </div>
+    <!-- 게시글 리스트 -->
     <div class="board_list">
       <table class="table-fixed">
         <thead>
