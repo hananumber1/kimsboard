@@ -5,7 +5,7 @@
       <div class="w-full mt-4">
         <form
           class="bg-white border rounded px-8 pt-6 pb-8 mb-4"
-          @submit="putBoardDetail"
+          @submit="putBoardModify"
         >
           <p class="text-base font-bold text-gray-700 mb-3">게시글 작성하기</p>
           <div class="mb-4">
@@ -93,6 +93,7 @@
       <button
         class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 ml-2 rounded focus:outline-none focus:shadow-outline"
         type="button"
+        @click="delBoard"
       >
         삭제하기
       </button>
@@ -143,7 +144,7 @@ export default {
         }
       });
     },
-    putBoardDetail() {
+    putBoardModify() {
       // 게시글 수정하기
       axios
         .put(
@@ -171,6 +172,28 @@ export default {
             alert("수정이 완료되었습니다.");
             this.showModify = false;
           }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    delBoard() {
+      // 게시글 수정하기
+      axios
+        .delete(
+          "/api/v1/board/post/" + this.postId,
+          {
+            postId: this.postId,
+          },
+          {
+            headers: {
+              "X-AUTH-TOKEN": this.userToken,
+            },
+          }
+        )
+        .then(({ data }) => {
+          console.log(data);
+          
         })
         .catch((error) => {
           console.log(error);
