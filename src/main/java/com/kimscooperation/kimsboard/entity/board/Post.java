@@ -1,5 +1,8 @@
 package com.kimscooperation.kimsboard.entity.board;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -8,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kimscooperation.kimsboard.entity.common.CommonDateEntity;
 import com.kimscooperation.kimsboard.entity.user.Users;
 
@@ -43,6 +48,10 @@ public class Post extends CommonDateEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_num")
 	private Users user; // 게시글 - 회원의 관계 - N:1
+
+	@OneToMany(mappedBy = "post" ,fetch = FetchType.LAZY)
+	@JsonManagedReference
+	private List<Reply> replies = new ArrayList<Reply>();
 
 	// Join 테이블이 Json결과에 표시되지 않도록 처리.
 	protected Board getBoard() {

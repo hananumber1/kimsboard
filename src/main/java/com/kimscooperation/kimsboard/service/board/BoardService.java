@@ -52,7 +52,7 @@ public class BoardService {
 	public Post writePost(final Long userNum, final String boardName, final ParamsWritePost ParamsWritePost) {
 		final Board board = findBoard(boardName);
 		final Users user = userRepository.findByUserNum(userNum).orElseThrow(CUserNotFoundException::new);
-		final Post post = new Post(user, board, user.getUsername(), ParamsWritePost.getTitle(), ParamsWritePost.getContent());
+		final Post post = new Post(user, board, user.getName(), ParamsWritePost.getTitle(), ParamsWritePost.getContent());
 		return postRepository.save(post);
 	}
 
@@ -69,10 +69,10 @@ public class BoardService {
 	}
 
 	// 게시물을 삭제합니다. 게시물 등록자와 로그인 회원정보가 틀리면 CNotOwnerException 처리합니다.
-	public boolean deletePost(final long postId, final String userId) {
+	public boolean deletePost(final long postId, final String userNum) {
 		final Post post = getPost(postId);
 		final Users user = post.getUser();
-		if (!userId.equals(user.getUserId())) {
+		if(! (user.getUserNum() == Long.parseLong(userNum))){
 			throw new CNotOwnerException();
 		}
 		postRepository.delete(post);
