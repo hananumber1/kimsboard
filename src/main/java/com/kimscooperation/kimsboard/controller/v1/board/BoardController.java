@@ -66,9 +66,6 @@ public class BoardController {
 	public SingleResult<Post> post(@PathVariable String boardName, @Valid @RequestBody ParamsWritePost post) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		String uid = authentication.getName();
-		System.out.println(boardName);
-		System.out.println(post);
-		System.out.println(uid);
 		return responseService.getSingleResult(boardService.writePost(Long.parseLong(uid), boardName, post));
 	}
 

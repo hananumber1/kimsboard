@@ -13,11 +13,12 @@ spring:
   #   static-locations: classpath:/static/
   #   add-mappings: true
   jpa:
+    show-sql: true
     properties:
       hibernate:
-        show_sql: true
         format_sql: true
-        ddl-auto: update
+    hibernate:
+      ddl-auto: update
     database: oracle
   messages:
     basename: classpath:/messages/exception
