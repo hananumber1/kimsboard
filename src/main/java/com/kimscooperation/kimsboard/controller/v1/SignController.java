@@ -1,6 +1,8 @@
 package com.kimscooperation.kimsboard.controller.v1;
 
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -48,13 +50,16 @@ public class SignController {
 
 	@ApiOperation(value = "로그인", notes = "일반 로그인을 처리하는 API")
 	@RequestMapping(value = "/signin", method = RequestMethod.POST)
-		public SingleResult<String> signin(@Valid @RequestBody ParamsUser paramsUser) {
+		public SingleResult<Map<String, Object>> signin(@Valid @RequestBody ParamsUser paramsUser) {
 		String userId = paramsUser.getUserId();
 		String password = paramsUser.getPassword();
 		Users user = userRepository.findByUserId(userId).orElseThrow(CIdSigninFailedException::new);
 		if (!passwordEncoder.matches(password, user.getPassword()))
 			throw new CIdSigninFailedException();
-		return responseService.getSingleResult(jwtTokenProvider.createToken(String.valueOf(user.getUserNum()), user.getRoles()));
+		Map<String, Object> resultMap = new HashMap<>();
+		resultMap.put("userToken",jwtTokenProvider.createToken(String.valueOf(user.getUserNum()), user.getRoles()));
+		resultMap.put("user",user);
+		return responseService.getSingleResult(resultMap);
 	}
 
 	@ApiOperation(value = "아이디 중복확인", notes = "받아온 아이디 값으로 회원이 존재하는 확인합니다.")
