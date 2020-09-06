@@ -130,7 +130,7 @@
       </div>
     </div>
     <div v-else style="height:100vh;">
-      <Spinner line-fg-color="#009900"/>
+      <Spinner line-fg-color="#009900" />
     </div>
   </div>
 </template>
@@ -179,7 +179,7 @@ export default {
           this.postDetail = data.data;
           this.boardTitle = this.postDetail.title;
           this.boardContent = this.postDetail.content;
-          this.loading=true
+          this.loading = true;
         } else {
           this.postDetail = "불러오는데 실패하였습니다.";
         }
@@ -219,28 +219,28 @@ export default {
         });
     },
     delBoard() {
-      // 게시글 수정하기
+      // 게시글 삭제하기
       axios
-        .delete(
-          "/api/v1/board/post/" + this.postId,
-          {
-            postId: this.postId,
+        .delete("/api/v1/board/post/" + this.postId, {
+          headers: {
+            "X-AUTH-TOKEN": this.userToken,
           },
-          {
-            headers: {
-              "X-AUTH-TOKEN": this.userToken,
-            },
-          }
-        )
+        })
         .then(({ data }) => {
-          console.log(data);
+          // console.log(data);
+          if (data.code === 0) {
+            alert("삭제가 완료되었습니다.리스트로 이동합니다.");
+            this.$router.push({
+              name: "BoardList",
+            });
+          }
         })
         .catch((error) => {
           console.log(error);
         });
     },
     postReply() {
-      // 게시글 수정하기
+      // 댓글 추가하가
       axios
         .post(
           "/api/v1/reply/" + this.postId,
