@@ -101,36 +101,63 @@
           삭제하기
         </button>
       </div>
-      <div>
-        <form class="w-full">
-          <div class="flex items-center border-b border-teal-500 py-2">
-            <input
-              class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
-              type="text"
-              placeholder="댓글 내용을 입력해주세요"
-              aria-label="Full name"
-              v-model="writeReply"
-            />
-            <button
-              class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
-              type="button"
-              @click="postReply()"
+      <form class="w-full mt-20" v-if="userToken !== null">
+        <div class="flex items-center border-b border-teal-500 py-2">
+          <input
+            class="appearance-none bg-transparent border-none w-full text-gray-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
+            type="text"
+            placeholder="댓글 내용을 입력해주세요"
+            aria-label="Full name"
+            v-model="writeReply"
+          />
+          <button
+            class="flex-shrink-0 bg-teal-500 hover:bg-teal-700 border-teal-500 hover:border-teal-700 text-sm border-4 text-white py-1 px-2 rounded"
+            type="button"
+            @click="postReply()"
+          >
+            댓글 추가
+          </button>
+          <button
+            class="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-2 px-2 rounded border border-teal-500 hover:border-teal-500 ml-2"
+            type="button"
+            @click="writeReply = null"
+          >
+            취소
+          </button>
+        </div>
+      </form>
+      <!-- 댓글 리스트 -->
+      <div class="board_list mt-10">
+        <p class="text-base font-bold text-gray-700 mb-3">
+          댓글
+        </p>
+        <table class="table-fixed w-full">
+          <thead>
+            <tr>
+              <th class="w-1/6 px-3 py-2">글번호</th>
+              <th class="w-1/6 px-3 py-2">내용</th>
+              <th class="w-1/8 px-3 py-2">작성자</th>
+              <th class="w-1/8 px-3 py-2">작성일</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="(list, index) in postDetail.replies"
+              :key="'list' + index"
+              @click="goToDetail(list.postId)"
+              :class="{ 'bg-gray-100': index % 2 === 0 }"
             >
-              댓글 추가
-            </button>
-            <button
-              class="flex-shrink-0 border-transparent border-4 text-teal-500 hover:text-teal-800 text-sm py-2 px-2 rounded border border-teal-500 hover:border-teal-500 ml-2"
-              type="button"
-              @click="writeReply = null"
-            >
-              취소
-            </button>
-          </div>
-        </form>
+              <td class="border px-4 py-2 text-center">{{ index + 1 }}</td>
+              <td class="border px-4 py-2 text-center">{{ list.content }}</td>
+              <td class="border px-4 py-2 text-center">{{ list.replyer }}</td>
+              <td class="border px-4 py-2 text-center">{{ list.createdAt }}</td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
     <div v-else style="height:100vh;">
-      <Spinner line-fg-color="#009900" />
+      <Spinner line-fg-color="#38b2ac" size="huge"/>
     </div>
   </div>
 </template>
@@ -245,7 +272,7 @@ export default {
         .post(
           "/api/v1/reply/" + this.postId,
           {
-            writeReply: this.writeReply,
+            content: this.writeReply,
           },
           {
             headers: {
@@ -254,7 +281,13 @@ export default {
           }
         )
         .then(({ data }) => {
-          console.log(data);
+          // console.log(data);
+          this.loading = false;
+          if(data.code===0){
+            alert("댓글이 추가되었습니다.");
+            this.getBoardDetail();
+            this.writeReply = null;
+          }
         })
         .catch((error) => {
           console.log(error);
