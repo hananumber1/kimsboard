@@ -135,20 +135,27 @@
           <thead>
             <tr>
               <th class="w-1/6 px-3 py-2">글번호</th>
-              <th class="w-1/6 px-3 py-2">내용</th>
-              <th class="w-1/8 px-3 py-2">작성자</th>
-              <th class="w-1/8 px-3 py-2">작성일</th>
+              <th class="w-1/8 px-3 py-2">내용</th>
+              <th class="w-1/6 px-3 py-2">작성자</th>
+              <th class="w-1/6 px-3 py-2">작성일</th>
             </tr>
           </thead>
           <tbody>
             <tr
               v-for="(list, index) in postDetail.replies"
               :key="'list' + index"
-              @click="goToDetail(list.postId)"
               :class="{ 'bg-gray-100': index % 2 === 0 }"
             >
               <td class="border px-4 py-2 text-center">{{ index + 1 }}</td>
-              <td class="border px-4 py-2 text-center">{{ list.content }}</td>
+              <td class="border px-4 py-2 text-center">
+                {{ list.content }} 
+                <button type="button" 
+                v-if="userInfo !==null && userInfo.userId === list.replyer"
+                @click="delReply(list.replyId)"
+                class="float-right bg-blue-500 hover:bg-blue-700 text-white text-sm py-1 px-2 rounded focus:outline-none focus:shadow-outline">
+                  삭제하기
+                </button>
+              </td>
               <td class="border px-4 py-2 text-center">{{ list.replyer }}</td>
               <td class="border px-4 py-2 text-center">{{ list.createdAt }}</td>
             </tr>
@@ -182,11 +189,15 @@ export default {
       boardContent: null,
       writeReply: null,
       loading: false,
+      userInfo:null,
     };
   },
   watch: {
     "$store.state.userToken"() {
       this.userToken = this.$store.state.userToken;
+    },
+    "$store.state.userInfo"() {
+      this.userInfo = this.$store.state.userInfo;
     },
     "$store.state.detailId"() {
       this.postId = this.$store.state.detailId;
@@ -194,6 +205,7 @@ export default {
   },
   created() {
     this.userToken = this.$store.state.userToken;
+    this.userInfo = this.$store.state.userInfo;
     this.postId = this.$store.state.detailId;
     this.getBoardDetail();
   },
@@ -287,6 +299,30 @@ export default {
             alert("댓글이 추가되었습니다.");
             this.getBoardDetail();
             this.writeReply = null;
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    delReply(postId) {
+      console.log(postId)
+      // 댓글 삭제하기
+      axios
+        .delete(
+          "/api/v1/reply/" + postId,
+          {
+            headers: {
+              "X-AUTH-TOKEN": this.userToken,
+            },
+          }
+        )
+        .then(({ data }) => {
+          // console.log(data);
+          this.loading = false;
+          if(data.code===0){
+            alert("댓글이 삭제되었습니다.");
+            this.getBoardDetail();
           }
         })
         .catch((error) => {
