@@ -8,6 +8,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userToken:null,
+    userInfo:null,
     detailCategory:null,
     detailId:null,
     loginErroMsg:null
@@ -26,9 +27,10 @@ export default new Vuex.Store({
     },
     setLoginErroMsg(state,payload){
       state.loginErroMsg = payload
+    },
+    setUserInfo(state,payload){
+      state.userInfo = payload
     }
-
-    
   },
   actions: {
     LOGIN({ commit }, { id, password }) {
@@ -38,8 +40,8 @@ export default new Vuex.Store({
         password: password,
       })
       .then(({data})=> {
-        // console.log(data)
-        commit("saveUserToken", data.data)
+        commit("setUserInfo", data.data.user)
+        commit("saveUserToken", data.data.userToken)
         localStorage.setItem("saveUserToken", data.data);
         router.push("/"); 
       })
