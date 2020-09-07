@@ -3,6 +3,7 @@ package com.kimscooperation.kimsboard.entity.board;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -49,7 +50,7 @@ public class Post extends CommonDateEntity {
 	@JoinColumn(name = "user_num")
 	private Users user; // 게시글 - 회원의 관계 - N:1
 
-	@OneToMany(mappedBy = "post" ,fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "post" ,fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JsonManagedReference
 	private List<Reply> replies = new ArrayList<Reply>();
 
