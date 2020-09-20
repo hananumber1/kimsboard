@@ -117,7 +117,7 @@ export default {
   },
   watch: {
     page(newValue, oldValue) {
-      axios.get("/api/v1/board/" + this.page + "/posts").then(({ data }) => {
+      axios.get("/v1/board/" + this.page + "/posts").then(({ data }) => {
         if (data.code === 0) {
           this.boardList = data.list;
         }
@@ -132,7 +132,7 @@ export default {
       this.page = val;
     },
     getBoardList() {
-      axios.get("/api/v1/board/" + this.page + "/posts").then(({ data }) => {
+      axios.get("/v1/board/" + this.page + "/posts").then(({ data }) => {
         if (data.code === 0) {
           this.boardList = data.list;
         }
@@ -141,7 +141,7 @@ export default {
     setBoardUpload() {
       axios
         .post(
-          "/api/v1/board/" + this.page + "/post",
+          "/v1/board/" + this.page + "/post",
           {
             boardName: this.page,
             title: this.boardTitle,

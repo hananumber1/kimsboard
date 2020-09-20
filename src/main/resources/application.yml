@@ -7,11 +7,11 @@ spring:
   # mustache:
   #   prefix: classpath:/static/
   #   suffix: .html
-  # mvc:
-  #   static-path-pattern: /static/**
-  # resources:
-  #   static-locations: classpath:/static/
-  #   add-mappings: true
+  mvc:
+    static-path-pattern: /static/**
+  resources:
+    static-locations: classpath:/static/
+    add-mappings: true
   jpa:
     show-sql: true
     properties:
@@ -33,9 +33,9 @@ spring:
         profile: https://kapi.kakao.com/v2/user/me
   url:
     base: http://localhost:8080
-  freemarker:
-    template-loader-path: classpath:/templates
-    suffix: .ftl
+  # freemarker:
+  #   template-loader-path: classpath:/templates
+  #   suffix: .ftl
     
 #Log    
 logging:
