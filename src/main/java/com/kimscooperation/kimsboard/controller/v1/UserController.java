@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.kimscooperation.kimsboard.advice.exception.CUserNotFoundException;
-import com.kimscooperation.kimsboard.domain.user.Users;
+import com.kimscooperation.kimsboard.entity.user.Users;
 import com.kimscooperation.kimsboard.model.CommonResult;
 import com.kimscooperation.kimsboard.model.ListResult;
 import com.kimscooperation.kimsboard.model.SingleResult;
@@ -21,6 +21,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
 import lombok.RequiredArgsConstructor;
 
 @Api(tags = { "2. Users" })
@@ -42,16 +43,16 @@ public class UserController {
 	}
 
 	@ApiImplicitParams({
-			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = false, dataType = "String", paramType = "header") })
-	@ApiOperation(value = "회원 단건 조회", notes = "회원번호(msrl)로 회원을 조회한다")
+			@ApiImplicitParam(name = "X-AUTH-TOKEN", value = "로그인 성공 후 access_token", required = true	, dataType = "String", paramType = "header") })
+	@ApiOperation(value = "회원 조회", notes = "header에 X-AUTH-TOKEN 으로 저장된 토큰을 가지고 해당 회원을 조회합니다.")
 	@RequestMapping(value = "/user" , method = RequestMethod.GET)
-	public SingleResult<Users> findUserById(@ApiParam(value = "언어", defaultValue = "ko") @RequestParam String lang) {
+	public SingleResult<Users> findUserById() {
 		// SecurityContext에서 인증받은 회원의 정보를 얻어온다.
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		String userId= authentication.getName();
-		System.out.println("userId= "+ userId);
+		String userNum= authentication.getName();
+		System.out.println("userNum= "+ userNum);
 		// 결과데이터가 단일건인경우 getSingleResult를 이용해서 결과를 출력한다.
-		return responseService.getSingleResult(userRepository.findByUserId(userId).orElseThrow(CUserNotFoundException::new));
+		return responseService.getSingleResult(userRepository.findByUserNum(Long.parseLong(userNum)).orElseThrow(CUserNotFoundException::new));
 	}
 
 	@ApiImplicitParams({

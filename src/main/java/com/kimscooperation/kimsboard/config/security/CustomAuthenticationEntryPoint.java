@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws IOException, ServletException {
+		System.out.println(request.getRequestURI());
 		response.sendRedirect("/exception/entrypoint");
 	}
 }

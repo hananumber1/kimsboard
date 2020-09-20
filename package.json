@@ -1,0 +1,66 @@
+{
+  "name": "kimsboard",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "@vue/cli-plugin-vuex": "^4.5.3",
+    "axios": "^0.19.2",
+    "debug": "^3.1.0",
+    "es6-promise": "^4.2.8",
+    "history": "^4.10.1",
+    "is-promise": "^2.2.2",
+    "isarray": "^0.0.1",
+    "js-cookie": "^2.2.1",
+    "js-tokens": "^4.0.0",
+    "lodash": "^4.17.19",
+    "loose-envify": "^1.4.0",
+    "ms": "^2.0.0",
+    "object-assign": "^4.1.1",
+    "path-to-regexp": "^1.8.0",
+    "postcss-loader": "^3.0.0",
+    "prop-types": "^15.7.2",
+    "regenerator-runtime": "^0.13.7",
+    "style-loader": "^1.2.1",
+    "symbol-observable": "^1.2.0",
+    "tailwindcss": "^1.7.6",
+    "tiny-invariant": "^1.1.0",
+    "tiny-warning": "^1.0.3",
+    "value-equal": "^1.0.1",
+    "vue-router": "^3.4.3",
+    "vue-simple-spinner": "^1.2.10",
+    "vuex": "^3.5.1"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.1.0",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^4.2.1",
+    "dotenv": "^8.2.0",
+    "html-webpack-plugin": "^4.3.0",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
+    "vue": "^2.6.11",
+    "vue-loader": "^15.9.3",
+    "vue-template-compiler": "^2.6.11",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "./node_modules/.bin/webpack --mode production",
+    "start": "webpack-dev-server --mode development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zxc7023/kimsboard.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zxc7023/kimsboard/issues"
+  },
+  "homepage": "https://github.com/zxc7023/kimsboard#readme"
+}

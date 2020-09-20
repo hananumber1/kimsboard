@@ -1,22 +1,34 @@
-package com.kimscooperation.kimsboard.domain.user;
+package com.kimscooperation.kimsboard.entity.user;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.kimscooperation.kimsboard.entity.common.CommonDateEntity;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Builder.Default;
+
 
 @Builder
 @Entity
@@ -25,7 +37,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Table(name = "users")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class Users implements UserDetails {
+public class Users extends CommonDateEntity implements UserDetails {
 
 	@Id
 	@SequenceGenerator(name = "user_seq_generator", sequenceName = "user_seq", initialValue = 1, allocationSize = 1)
@@ -33,7 +45,7 @@ public class Users implements UserDetails {
 	@Column(name = "user_num")
 	private long userNum;
 
-	@Column(name = "user_id", nullable = false)
+	@Column(name = "user_id", nullable = false, unique = true)
 	private String userId;
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY) //JSON 결과로 출력하지 않을 경우 사용
@@ -43,10 +55,17 @@ public class Users implements UserDetails {
 	@Column(name = "name")
 	private String name;
 
-	@Column(length = 100)
+	@Column(length = 100, name="provider")
 	private String provider;
 
-	@Builder.Default // roles가 null인 경우에 ArrayList로 초기화
+	@Column(name="phone")
+	private String phone;
+
+	@Column(name="address")
+	private String address;
+
+
+	@Default // roles가 null인 경우에 ArrayList로 초기화
 	@ElementCollection(fetch = FetchType.EAGER) //값 타입을 하나이상 보관하기 위해서 씀 
 	private List<String> roles = new ArrayList<>();
 

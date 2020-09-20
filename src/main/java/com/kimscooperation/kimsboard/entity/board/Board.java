@@ -1,4 +1,4 @@
-package com.kimscooperation.kimsboard.domain.board;
+package com.kimscooperation.kimsboard.entity.board;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
