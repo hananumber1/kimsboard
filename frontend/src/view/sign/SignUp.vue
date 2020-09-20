@@ -146,7 +146,7 @@ export default {
       var router = this.$router;
       if (this.idInspection) {
         axios
-          .post("/api/v1/signup", {
+          .post("/v1/signup", {
             address: this.add,
             name: this.name,
             password: this.password,
@@ -167,7 +167,7 @@ export default {
     },
     checkUserId() {
       axios
-        .get("/api/v1/user/userid", {
+        .get("/v1/user/userid", {
           params: {
             userId: this.id,
           },

@@ -3,6 +3,7 @@ import Vuex from "vuex"
 import router from '../router/index'
 import axios from "axios"
 
+axios.defaults.baseURL = process.env.API_URL;
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -35,7 +36,7 @@ export default new Vuex.Store({
   actions: {
     LOGIN({ commit }, { id, password }) {
       axios
-      .post("/api/v1/signin", {
+      .post("/v1/signin", {
         userId: id,
         password: password,
       })

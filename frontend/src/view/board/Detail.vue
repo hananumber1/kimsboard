@@ -212,7 +212,7 @@ export default {
   methods: {
     getBoardDetail() {
       // 게시글 정보 가져오기
-      axios.get("/api/v1/board/post/" + this.postId).then(({ data }) => {
+      axios.get("/v1/board/post/" + this.postId).then(({ data }) => {
         if (data.code === 0) {
           // console.log(data.data);
           this.postDetail = data.data;
@@ -228,7 +228,7 @@ export default {
       // 게시글 수정하기
       axios
         .put(
-          "/api/v1/board/post/" + this.postId,
+          "/v1/board/post/" + this.postId,
           {
             content: this.boardContent,
             title: this.boardTitle,
@@ -260,7 +260,7 @@ export default {
     delBoard() {
       // 게시글 삭제하기
       axios
-        .delete("/api/v1/board/post/" + this.postId, {
+        .delete("/v1/board/post/" + this.postId, {
           headers: {
             "X-AUTH-TOKEN": this.userToken,
           },
@@ -282,7 +282,7 @@ export default {
       // 댓글 추가하가
       axios
         .post(
-          "/api/v1/reply/" + this.postId,
+          "/v1/reply/" + this.postId,
           {
             content: this.writeReply,
           },
@@ -310,7 +310,7 @@ export default {
       // 댓글 삭제하기
       axios
         .delete(
-          "/api/v1/reply/" + postId,
+          "/v1/reply/" + postId,
           {
             headers: {
               "X-AUTH-TOKEN": this.userToken,
