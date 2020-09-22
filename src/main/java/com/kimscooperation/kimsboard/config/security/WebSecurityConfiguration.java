@@ -53,7 +53,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8081","http://127.0.0.1:8081","http://ec2-13-124-53-61.ap-northeast-2.compute.amazonaws.com:8080"));
+		configuration.setAllowedOrigins(Arrays.asList("http://localhost:8081","http://127.0.0.1:8081","http://vue-build-output.s3-website.ap-northeast-2.amazonaws.com","d27f1hcw6k0waa.cloudfront.net"));
 		configuration.setAllowedMethods(Arrays.asList("HEAD","GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
 		configuration.setAllowCredentials(false);
