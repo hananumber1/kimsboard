@@ -1,7 +1,7 @@
 # kimsboard 프로젝트의 빠른 개발과 생산성 향상을 위해 CI/CD tool인 Github Actions를 사용
-# 첫 번째 버전은 백엔드(Java) 기반의 프로젝트의 의존성 관리, 패키징, 테스팅, 컴파일 등을 관리하는 gradle용 workflow
-# 두 번째 버전은 프론트엔드(React.js) 기반의 프로젝트의 모듈관리 npm의 workflow를 추가할 예정
-name: kimsboard_build_deploy_workflow_v1
+# 백엔드(Java) 기반의 프로젝트의 의존성 관리, 패키징, 테스팅, 컴파일 등을 관리하는 gradle용 workflow
+
+name: backend_workflow
 
 # 환경 변수 $변수명 으로 사용
 # ex) $PROJECT_NAME
@@ -15,8 +15,8 @@ on:
     branches: [ master ]
 
 jobs:
-  # build용 job
-  build:
+  # backend build용 job
+  backend_build:
     # runner의 환경
     runs-on: ubuntu-latest
     
