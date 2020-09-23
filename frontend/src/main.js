@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 // import 'es6-promise/auto'
 Vue.use(Vuex)
 
-import App from "./App.vue";
+import App from "./app.vue";
 import router from "./router"
 import store from "./store"
 import './asset/style/index.css';
