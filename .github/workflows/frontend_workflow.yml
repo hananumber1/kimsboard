@@ -57,7 +57,10 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{secrets.AWS_REGION}}
     
+    - name: ls -la
+      run : ls -la
+
     # Upload to S3 stroage
     - name: Upload to S3
-      run: aws s3 cp ./frontend/dist/ s3://$BUCKET_NAME --region ap-northeast-2        
+      run: aws s3 cp frontend/dist s3://vue-build-output/ --region ap-northeast-2 --recursive        
     
