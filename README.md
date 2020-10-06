@@ -22,6 +22,7 @@
 - ### Front-End
     - Vue.js 2.x
     - Webpack 4.x
+    - tailwindcss
 
 - ### Back-End
     - 개발 언어 : JAVA (open jdk 1.8)
